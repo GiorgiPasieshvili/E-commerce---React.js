@@ -1,0 +1,97 @@
+.cart h2 {
+  font-size: 32px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+}
+
+.cart > ul > li {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #E5E5E5;
+  padding: 12px 0;
+}
+
+.cart > ul > li:last-child{
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.cart h4 {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.cart h3 {
+  font-size: 30px;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.cart .price {
+  font-size: 24px;
+  font-weight: bold;
+  display: inline-block;
+  margin: 16px 0;
+}
+
+.cart .attributes {
+  display: flex;
+  margin-top: 12px;
+}
+
+.cart .options {
+  margin-right: 16px;
+}
+
+.cart .options li {
+  width: auto;
+  height: 24px;
+  margin-right: 6px;
+  padding: 16px;
+}
+
+.cart .right {
+  display: flex;
+}
+
+.cart .quantity {
+  font-size: 24px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.cart .quantity button {
+  width: 45px;
+  height: 45px;
+}
+
+.cart img {
+  width: 140px;
+  height: 185px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.cart .checkout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin: 16px 0 0;
+}
+
+.cart .checkout span {
+  display: inline-block;
+  font-family: Roboto;
+  margin-right: 8px;
+}
+
+.cart .btn-green {
+  height: 43px;
+  font-size: 14px;
+  width: 250px;
+}

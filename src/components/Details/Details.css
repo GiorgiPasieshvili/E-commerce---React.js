@@ -1,0 +1,117 @@
+.details {
+  display: flex;
+}
+
+.details .images {
+  display: flex;
+}
+
+.details .images .others {
+  display: flex;
+  flex-direction: column;
+  height: 510px;
+  overflow-y: scroll;
+  
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+.details .images .others::-webkit-scrollbar {
+  display: none;
+}
+
+.details .images .others img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+  margin-bottom: 40px;
+
+}
+
+.details .images .default {
+  width: 610px;
+  height: 510px;
+  object-fit: cover;
+  object-position: center;
+  margin-left: 40px;
+}
+
+.details .info {
+  width: 100%;
+  margin-left: 100px;
+}
+
+.details .info h3 {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.details .info h2 {
+  font-size: 30px;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.details .attribute {
+  margin-bottom: 30px;
+}
+
+.details .options {
+  display: flex;
+}
+
+.details .options li {
+  font-family: Source Sans Pro;
+  font-size: 16px;
+
+  width: 60px;
+  height: 45px;
+  margin-right: 12px;
+}
+
+.details .heading {
+  display: block;
+  font-family: Roboto Condensed;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.details .amount {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+.btn-green {
+  height: 52px;
+  margin-bottom: 30px;
+}
+
+.btn-red {
+  height: 52px;
+  margin-bottom: 30px;
+}
+
+.description {
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.description p,
+.description li {
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.description h1,
+.description h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}

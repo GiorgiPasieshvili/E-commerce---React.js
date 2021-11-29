@@ -1,0 +1,134 @@
+.minicart-wrapper {
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+}
+
+.cart-icon {
+  cursor: pointer;
+}
+
+.indicator {
+  font-family: Roboto;
+  font-weight: bold;
+  font-size: 14px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+
+  background: #1D1F22;
+  color: #fff;
+
+  position: absolute;
+  left: 55%;
+  bottom: 45%;
+}
+
+.minicart {
+  display: none;
+  width: 325px;
+  background: #fff;
+  padding: 16px;
+
+  position: absolute;
+  top: 50px;
+  right: 0;
+  z-index: 10;
+}
+
+.active {
+  display: block;
+}
+
+.minicart .heading {
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-bottom: 28px;
+}
+
+.minicart .heading span {
+  font-weight: 500;
+  text-transform: lowercase;
+}
+
+.minicart .list li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 34px;
+}
+
+.minicart .list h3,
+.minicart .list h2 {
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.minicart .price {
+  display: inline-block;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.minicart .options li {
+  width: auto;
+  height: 24px;
+  border: 1px solid #1D1F22;
+  margin: 0 6px 0 0;
+  padding: 5px;
+}
+
+.minicart .right {
+  display: flex;
+}
+
+.minicart .quantity {
+  margin-right: 8px;
+}
+
+.minicart .quantity button {
+  width: 24px;
+  height: 24px;
+}
+
+.minicart img {
+  width: 105px;
+  height: 137px;
+  object-fit: contain;
+  object-position: center top;
+} 
+
+.minicart .total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.minicart .total:first-child {
+  font-family: Roboto;
+}
+
+.minicart .buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.minicart .btn-light {
+  font-size: 14px;
+  height: 43px;
+}
+
+.minicart .btn-green {
+  font-size: 14px;
+  height: 43px;
+}
