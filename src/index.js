@@ -22,7 +22,8 @@ class App extends Component {
       category: "",
       currency: "USD",
       cartItems: [],
-      overlay: false
+      currencyActive: false,
+      minicartActive: false
     }
   }
 
@@ -47,37 +48,59 @@ class App extends Component {
     }))
   }
 
-  setOverlay = (boolean) => {
+  setCurrencyActive = (boolean) => {
     this.setState((state) => ({ 
       ...state,
-      overlay: boolean
+      currencyActive: boolean
+    }))
+  }
+
+  setMinicartActive = (boolean) => {
+    this.setState((state) => ({ 
+      ...state,
+      minicartActive: boolean
     }))
   }
 
   onAdd = (product, selectedOptions) => {
-    const exist = this.state.cartItems.find((x) => x.id === product.id);
-    if(exist) {
-      if(!selectedOptions) {
-        selectedOptions = exist.selectedOptions
-      }
-      this.setCartItems(
-        this.state.cartItems.map((x) => 
-          x.id === product.id ? { ...exist, qty: exist.qty + 1, selectedOptions } : x
+    const { cartItems } = this.state;
+    const { setCartItems } = this;
+
+    if(!selectedOptions) {
+      selectedOptions = product.selectedOptions ? product.selectedOptions : []
+    }
+
+    const sameProduct = cartItems
+      .filter((x) => x.id === product.id)
+      .find(x => JSON.stringify(x.selectedOptions) === JSON.stringify(selectedOptions))
+
+    if(sameProduct) {
+      setCartItems(
+        cartItems.map((x) => 
+          x.uniqueId === sameProduct.uniqueId ? { ...sameProduct, qty: sameProduct.qty + 1 } : x
         )
       )
     } else {
-      this.setCartItems([...this.state.cartItems, { ...product, qty: 1, selectedOptions }])
+      setCartItems([
+        ...cartItems, 
+        { 
+          ...product, 
+          uniqueId: cartItems[0] ? cartItems[cartItems.length - 1].uniqueId + 1 : 0,
+          qty: 1, 
+          selectedOptions 
+        }
+      ])
     }
   }
 
   onRemove = (product) => {
-    const exist = this.state.cartItems.find((x) => x.id === product.id);
+    const exist = this.state.cartItems.find((x) => x.uniqueId === product.uniqueId);
     if(exist.qty === 1) {
-      this.setCartItems(this.state.cartItems.filter((x) => x.id !== product.id));
+      this.setCartItems(this.state.cartItems.filter((x) => x.uniqueId !== product.uniqueId));
     } else {
       this.setCartItems(
         this.state.cartItems.map((x) => 
-          x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
+          x.uniqueId === product.uniqueId ? { ...exist, qty: exist.qty - 1 } : x
         )
       )
     }
@@ -86,7 +109,7 @@ class App extends Component {
   onChange = (product, id, value) => {
     this.setCartItems(
       this.state.cartItems.map((x) => 
-        x.id === product.id ? { ...product, selectedOptions: [ 
+        x.uniqueId === product.uniqueId ? { ...product, selectedOptions: [ 
           ...product.selectedOptions.filter(option => option.id !== id), {id, value} 
         ] } : x
       )
@@ -94,7 +117,6 @@ class App extends Component {
   }
 
   render(){
-
     return (
       <div>
         <Header 
@@ -102,8 +124,12 @@ class App extends Component {
           setCategory={this.setCategory} 
           currency={this.state.currency} 
           setCurrency={this.setCurrency} 
-          overlay={this.state.overlay}
-          setOverlay={this.setOverlay}
+
+          currencyActive={this.state.currencyActive}
+          setCurrencyActive={this.setCurrencyActive}
+          minicartActive={this.state.minicartActive}
+          setMinicartActive={this.setMinicartActive}
+
           cartItems={this.state.cartItems}
           setCartItem={this.setCartItems}
           onAdd={this.onAdd} 
@@ -112,13 +138,18 @@ class App extends Component {
         />
 
       <div 
-        className={this.state.overlay ? 'overlay' : undefined} 
-        onClick={() => this.setOverlay(false)}>
+        className={
+          this.state.minicartActive ? 'overlay' :  this.state.currencyActive ? 'hidden-overlay' : undefined
+        } 
+        onClick={() => {
+          this.setMinicartActive(false)
+          this.setCurrencyActive(false)
+        }}>
       </div>
         
       <Switch>
-        <Route exact path="/" children={<Products currency={this.state.currency} cartItems={this.state.cartItems} />} />
-        <Route exact path="/category/:category" children={<Products currency={this.state.currency} cartItems={this.state.cartItems} />} />
+        <Route exact path="/" children={<Products currency={this.state.currency} cartItems={this.state.cartItems} onAdd={this.onAdd} />} />
+        <Route exact path="/category/:category" children={<Products currency={this.state.currency} cartItems={this.state.cartItems} onAdd={this.onAdd} />} />
         <Route exact path="/product/:id" children={<Details currency={this.state.currency} onAdd={this.onAdd} />} />
         <Route exact path="/cart" children={
           <Cart 

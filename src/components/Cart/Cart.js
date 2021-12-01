@@ -1,8 +1,9 @@
 import { Component } from 'react';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 import './Cart.css'
 
 export default class Cart extends Component {
-
   render() {
     const { currency, cartItems, onAdd, onRemove, onChange } = this.props;
     const itemsPrice = cartItems.reduce((a, c) => a + c.prices.find(price => price.currency === currency).amount * c.qty, 0);
@@ -15,11 +16,14 @@ export default class Cart extends Component {
             .slice(0)
             .reverse()
             .map((product) => (
-              <li key={product.id} >
+              <li key={product.uniqueId} >
                 <div>
                   <h4>{product.brand}</h4>
                   <h3>{product.name}</h3>
-                  <span className="price">{product.prices.find(price => price.currency === currency).amount} {currency}</span>
+                  <span className="price">
+                    <i className={`fa fa-${currency === 'AUD' ? 'usd' : currency.toLowerCase()}`}></i>
+                    {product.prices.find(price => price.currency === currency).amount}
+                  </span>
                   
                   <div className="attributes">
                     { product.attributes.map((attribute) => (
@@ -57,7 +61,25 @@ export default class Cart extends Component {
                     <span>{product.qty}</span>
                     <button onClick={() => onRemove(product)}>-</button>
                   </div>
-                  <img src={product.gallery[0]} alt={product.name} />
+
+                  <Carousel 
+                    showThumbs={false} 
+                    showIndicators={false} 
+                    showStatus={false} 
+                    width={140} 
+                  >
+                    {
+                      product.gallery.map((image, index) => (
+                        <div key={index} >
+                          <img 
+                            src={image} 
+                            alt={product.name} 
+                          />
+                        </div>
+                      ))
+                    }
+                  </Carousel>
+
                 </div>
               </li>
             )) }
@@ -66,7 +88,10 @@ export default class Cart extends Component {
         <div className="checkout">
           <div>
             <span>Total:</span>
-            <span>{itemsPrice.toFixed(2)} {currency}</span>
+            <span>
+              <i className={`fa fa-${currency === 'AUD' ? 'usd' : currency.toLowerCase()}`}></i>
+              {itemsPrice.toFixed(2)}
+            </span>
           </div>
   
           <button className="btn btn-green">

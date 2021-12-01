@@ -58,7 +58,8 @@ a {
     margin: 0 auto;
 }
 
-.overlay {
+.overlay,
+.hidden-overlay {
   background: #393748;
   width: 100vw;
   height: 100vh;
@@ -68,6 +69,10 @@ a {
   overflow: hidden;
   opacity: .22;
   z-index: 5;
+}
+
+.hidden-overlay {
+  background: transparent;
 }
 
 .btn {

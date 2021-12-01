@@ -5,15 +5,19 @@ import './MiniCart.css'
 export default class MiniCart extends Component {
 
   render(){
-    const { cartItems, currency, overlay, setOverlay, onAdd, onRemove, onChange } = this.props;
+    const { cartItems, currency, minicartActive, setMinicartActive, setCurrencyActive, onAdd, onRemove, onChange } = this.props;
     const itemsPrice = cartItems.reduce((a, c) => a + c.prices.find(price => price.currency === currency).amount * c.qty, 0);
+    const totalItems = cartItems.reduce((a, c) => a + c.qty, 0);
 
     return (
     <div className="minicart-wrapper">
 
-      <div className="cart-icon" onClick={() => setOverlay(!overlay)} >
+      <div className="cart-icon" onClick={() => {
+        setMinicartActive(!minicartActive)
+        setCurrencyActive(false)
+      }} >
 
-        {cartItems.length > 0 && (<span className="indicator">{cartItems.length}</span>)}
+        {totalItems > 0 && (<span className="indicator">{totalItems}</span>)}
 
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M19.5613 4.87359C19.1822 4.41031 18.5924 4.12873 17.9821 4.12873H5.15889L4.75914 2.63901C4.52718 1.77302 3.72769 1.16895 2.80069 1.16895H0.653099C0.295301 1.16895 0 1.45052 0 1.79347C0 2.13562 0.294459 2.418 0.653099 2.418H2.80069C3.11654 2.418 3.39045 2.61936 3.47434 2.92139L6.04306 12.7077C6.27502 13.5737 7.07451 14.1778 8.00152 14.1778H16.4028C17.3289 14.1778 18.1507 13.5737 18.3612 12.7077L19.9405 6.50575C20.0877 5.941 19.9619 5.33693 19.5613 4.87365L19.5613 4.87359ZM18.6566 6.22252L17.0773 12.4245C16.9934 12.7265 16.7195 12.9279 16.4036 12.9279H8.00154C7.68569 12.9279 7.41178 12.7265 7.32789 12.4245L5.49611 5.39756H17.983C18.1936 5.39756 18.4042 5.49824 18.5308 5.65948C18.6567 5.81994 18.7192 6.0213 18.6567 6.22266L18.6566 6.22252Z" fill="#43464E"/>
@@ -23,9 +27,9 @@ export default class MiniCart extends Component {
 
       </div>
 
-       <div className={`minicart ${overlay ? 'active' : undefined}`}>
+       <div className={`minicart ${minicartActive ? 'active' : undefined}`}>
 
-         <h3 className="heading">My Bag, <span>{cartItems.length} items</span></h3>
+         <h4>My Bag, <span>{cartItems.length} items</span></h4>
 
          <ul className="list">
            {
@@ -33,42 +37,45 @@ export default class MiniCart extends Component {
             .slice(cartItems.length - 2, cartItems.length)
             .reverse()
             .map((product) => (
-            <li key={product.id} >
+            <li key={product.uniqueId} >
 
               <div className="left">
 
                 <h3>{product.brand}</h3>
                 <h2>{product.name}</h2>
                 <span className="price">
-                  {product.prices.find(price => price.currency === currency).amount} {currency}
+                  <i className={`fa fa-${currency === 'AUD' ? 'usd' : currency.toLowerCase()}`}></i>
+                  {product.prices.find(price => price.currency === currency).amount}
                 </span>
        
-                <ul className="options" >
-                  {
-                    product.attributes[0].items.map((item) => {
-                      const selectedItem = product.selectedOptions.find(option => option.id === product.attributes[0].id && option.value === item.value)
-
-                      return (
-                        product.attributes[0].type === "swatch" ? (
-                          <li 
-                            style={{background: item.value}} 
-                            onClick={() => onChange(product, product.attributes[0].id, item.value)} 
-                            className={selectedItem ? 'swatch-active' : undefined}
-                            key={item.id}
-                          ></li>
-                        ) : (
-                          <li 
-                            className={selectedItem ? 'active' : undefined} 
-                            onClick={() => onChange(product, product.attributes[0].id, item.value)} 
-                            key={item.id}
-                          > 
-                          {item.value}
-                          </li>
-                        )
-                      )
-                    })
-                  }
-                </ul>
+                {
+                  product.attributes.map((attribute) => (
+                    <div className="attribute" key={attribute.id}>
+                      <span className="heading">{attribute.name}:</span>
+                      <ul className="options">
+                        { attribute.items.map((item) => {
+                            const selectedItem = product.selectedOptions.find(option => option.id === attribute.id && option.value === item.value)
+                            return (
+                              attribute.type === "swatch" ? (
+                                <li 
+                                  style={{background: item.value, width: '20px'}} 
+                                  onClick={() => onChange(product, attribute.id, item.value)}
+                                  className={selectedItem ? 'swatch-active' : undefined}
+                                  key={item.id}
+                                ></li>
+                              ) : (
+                                <li 
+                                  className={selectedItem ? 'active' : undefined }
+                                  onClick={() => onChange(product, attribute.id, item.value)} 
+                                  key={item.id}
+                                > 
+                                {item.value}
+                                </li>
+                          ))})}
+                      </ul>
+                    </div>
+                  ))
+                }
               </div>
 
               <div className="right">
@@ -87,11 +94,14 @@ export default class MiniCart extends Component {
 
         <div className="total">
           <span>Total</span>
-          <span>{itemsPrice.toFixed(2)} {currency}</span>
+          <span>
+            <i className={`fa fa-${currency === 'AUD' ? 'usd' : currency.toLowerCase()}`}></i>
+            {itemsPrice.toFixed(2)}
+          </span>
         </div>
 
         <div className="buttons">
-          <Link to={`/cart`} className="btn btn-light" onClick={() => setOverlay(false)} >
+          <Link to={`/cart`} className="btn btn-light" onClick={() => setMinicartActive(false)} >
             view bag
           </Link>
 

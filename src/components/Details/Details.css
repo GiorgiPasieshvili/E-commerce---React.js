@@ -43,7 +43,7 @@
   margin-left: 100px;
 }
 
-.details .info h3 {
+.details .info .subheading {
   font-size: 30px;
   font-weight: 600;
   margin-bottom: 12px;
@@ -101,6 +101,10 @@
   font-family: Roboto;
   font-weight: 400;
   font-size: 16px;
+}
+
+.description ul {
+  list-style-type: disc;
 }
 
 .description p,

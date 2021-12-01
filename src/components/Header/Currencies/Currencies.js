@@ -10,17 +10,10 @@ const GET_CURRENCIES = gql`
 `;
 
 export default class Currencies extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      menuActive: false
-    }
-  }
-
+  
   render(){
 
-    const { currency, setCurrency,  } = this.props;
+    const { currency, setCurrency, currencyActive, setCurrencyActive, setMinicartActive } = this.props;
 
     return (
       <Query query={GET_CURRENCIES}>
@@ -32,19 +25,23 @@ export default class Currencies extends Component {
             return (
               <div className="currencies" >
 
-                <span onClick={() => { this.setState((state) => ({ menuActive: !state.menuActive })) }}>
-                  {currency}
+                <span onClick={() => {
+                  setMinicartActive(false)
+                  setCurrencyActive(!currencyActive)
+                }}>
+                <i className={`fa fa-${currency === 'AUD' ? 'usd' : currency.toLowerCase()}`}></i>
                 </span>
       
-                <ul className={this.state.menuActive ? 'active' : undefined} >
+                <ul className={currencyActive ? 'active' : undefined} >
                   {
                     data.currencies.map((currency, index) => (
                         <li 
                           key={index} 
                           onClick={() => {
                             setCurrency(currency)
-                            this.setState((state) => ({ menuActive: false }))
+                            setCurrencyActive(false)
                           }} >
+                          <i className={`fa fa-${currency === 'AUD' ? 'usd' : currency.toLowerCase()}`}></i>
                           {currency}
                         </li>
                     ))

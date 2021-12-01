@@ -16,6 +16,18 @@ const GET_PRODUCTS = gql`
         name
         inStock
         gallery
+        description
+        brand
+        attributes {
+          id
+          name
+          type
+          items {
+            displayValue
+            value
+            id
+          }
+        }
         prices {
           currency
           amount
@@ -28,7 +40,7 @@ const GET_PRODUCTS = gql`
 class Products extends Component {
   render(){
     const category = this.props.match.params.category || "";
-    const { currency, cartItems } = this.props;
+    const { currency, cartItems, onAdd } = this.props;
 
     return (
       <Query query={GET_PRODUCTS} variables={ { name: category } } >
@@ -45,8 +57,8 @@ class Products extends Component {
               
                 <ul>
                   {
-                    products.map((product) => (
-                      <li key={product.id} >
+                    products.map((product, index) => (
+                      <li key={index} >
                         <Link to={`/product/${product.id}`}>
                           {!product.inStock && (<span className="nostock">out of stock</span>)}
           
@@ -71,11 +83,25 @@ class Products extends Component {
                               </defs>
                             </svg>
                           )}
-          
                           <img src={product.gallery[0]} alt={product.name} />
-                          <h2>{product.name}</h2>
-                          <span>{product.prices.find(price => price.currency === currency).amount} {currency}</span>
                         </Link>
+                        <h2>{product.brand} {product.name}</h2>
+                        <div className="info">
+                          <span>
+                            <i className={`fa fa-${currency === 'AUD' ? 'usd' : currency.toLowerCase()}`}></i>
+                            {product.prices.find(price => price.currency === currency).amount}
+                          </span>
+                          {
+                            product.inStock && (
+                              <button 
+                                className="btn btn-green"
+                                onClick={() => {
+                                  onAdd(product)
+                                }}
+                              >add to cart</button>
+                            )
+                          }
+                        </div>
                       </li>
                     ))
                   }

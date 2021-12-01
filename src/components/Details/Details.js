@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { gql } from "@apollo/client";
 import { Query } from '@apollo/client/react/components'
 import { withRouter } from "react-router-dom";
+import Interweave from 'interweave';
 
 import './Details.css'
 
@@ -95,7 +96,7 @@ class Details extends Component {
                 </div>
 
                 <div className="info">
-                  <h3>{product.brand}</h3>
+                  <h3 className="subheading" >{product.brand}</h3>
                   <h2>{product.name}</h2>
         
                   {
@@ -128,7 +129,10 @@ class Details extends Component {
                   }
 
                   <span className="heading">price:</span>
-                  <span className="amount">{product.prices.find(price => price.currency === currency).amount} {currency}</span>
+                  <span className="amount">
+                    <i className={`fa fa-${currency === 'AUD' ? 'usd' : currency.toLowerCase()}`}></i>
+                    {product.prices.find(price => price.currency === currency).amount}
+                  </span>
         
                   <button 
                     className={`btn btn-${product.inStock ? 'green' : 'red'}`}
@@ -144,8 +148,7 @@ class Details extends Component {
                   >
                     {product.inStock ? 'add to cart' : 'out of stock'}
                   </button>
-
-                  <div className="description" dangerouslySetInnerHTML={{ __html: product.description }} />
+                  <Interweave className="description" content={product.description} />
                 </div>
               </div>
               )

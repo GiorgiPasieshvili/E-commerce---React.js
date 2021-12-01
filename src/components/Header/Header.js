@@ -10,7 +10,20 @@ import './Header.css'
 export default class Header extends Component {
   render(){
 
-    const { category, setCategory, currency, setCurrency, overlay, setOverlay, cartItems, setCartItems, onAdd, onRemove, onChange } = this.props;
+    const { 
+      category, 
+      setCategory, 
+      currency, 
+      setCurrency, 
+      currencyActive, 
+      setCurrencyActive, 
+      minicartActive,
+      setMinicartActive,
+      cartItems, 
+      setCartItems, 
+      onAdd, 
+      onRemove, 
+      onChange } = this.props;
 
     return (
       <div className="header">
@@ -22,12 +35,16 @@ export default class Header extends Component {
               <Currencies 
                 currency={currency} 
                 setCurrency={setCurrency} 
+                currencyActive={currencyActive} 
+                setCurrencyActive={setCurrencyActive} 
+                setMinicartActive={setMinicartActive} 
               />
 
               <MiniCart 
                 currency={currency} 
-                overlay={overlay} 
-                setOverlay={setOverlay} 
+                minicartActive={minicartActive} 
+                setMinicartActive={setMinicartActive} 
+                setCurrencyActive={setCurrencyActive} 
                 cartItems={cartItems} 
                 setCartItems={setCartItems} 
                 onAdd={onAdd} 
