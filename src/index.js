@@ -11,7 +11,7 @@ import Cart from './components/Cart/Cart'
 import './index.css'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/',
+  uri: process.env.REACT_APP_GRAPHQL_SERVER || 'http://localhost:4000/',
   cache: new InMemoryCache()
 });
 
