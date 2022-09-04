@@ -1,3 +1,3 @@
-# Ecommerce-React.js
+# Mini eCommerce platform based on React.js
 
-https://ecommerce-react-js.vercel.app/
+https://mincommerce.vercel.app/
