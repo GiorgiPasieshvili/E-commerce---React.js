@@ -13,12 +13,12 @@
 
 .products li {
   padding: 16px;
-  transition: 150ms ease-in;
+  transition: .3s;
+  box-shadow: 0px 0px 15px rgb(168 172 176 / 20%);
 }
 
 .products li:hover {
-  box-shadow: 0px 4px 35px rgba(168, 172, 176, .19);
-
+  box-shadow: 0px 0px 15px rgb(168 172 176 / 50%);
 }
 
 .products a {
@@ -30,7 +30,7 @@
 .products .nostock {
   font-size: 24px;
   text-transform: uppercase;
-  color: #8D8F9A;
+  color: #8d8f9a;
 
   position: absolute;
   left: 50%;
