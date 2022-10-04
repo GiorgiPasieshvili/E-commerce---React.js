@@ -19,7 +19,7 @@ export default class Currencies extends Component {
       <Query query={GET_CURRENCIES}>
         {
           ({ loading, error, data }) => {
-            if(loading) return <h4>Loading...</h4>
+            if (loading) return <div className="preloader"></div>;
             if(error) console.log(error)
           
             return (

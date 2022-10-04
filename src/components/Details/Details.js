@@ -72,7 +72,7 @@ class Details extends Component {
       <Query query={GET_PRODUCT} variables={ { name: id } } >
         {
           ({ loading, error, data }) => {
-            if(loading) return <h4>Loading...</h4>
+            if (loading) return <div className="preloader"></div>;
             if(error) console.log(error)
             const { product } = data
             
