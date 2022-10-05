@@ -3,10 +3,10 @@ import { render } from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
-import Header from './components/Header/Header'
-import Products from './components/Products/Products';
-import Details from './components/Details/Details';
-import Cart from './components/Cart/Cart'
+import Header from 'component/Header/Header'
+import Products from 'component/Products/Products';
+import Details from 'component/Details/Details';
+import Cart from 'component/Cart/Cart'
 
 import './index.css'
 
