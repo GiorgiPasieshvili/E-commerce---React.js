@@ -20,10 +20,10 @@ class Menu extends PureComponent {
               {data.categories.map(({ name }, index) => (
                 <li
                   key={index}
-                  className={name === category ? "active" : undefined}
+                  className={name === category ? "active" : null}
                   onClick={() => setCategory(name)}
                 >
-                  <Link to={`/category/${name}`}>{name}</Link>
+                  <Link to={'/category/' + name}>{name}</Link>
                 </li>
               ))}
             </ul>

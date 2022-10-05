@@ -5,6 +5,10 @@ import { GET_CURRENCIES } from "query/currencies.query";
 import "./Currencies.scss";
 
 class Currencies extends PureComponent {
+  _formatCurrency(currency) {
+    return currency === "AUD" ? "usd" : currency.toLowerCase();
+  }
+
   render() {
     const {
       currency,
@@ -13,6 +17,8 @@ class Currencies extends PureComponent {
       setCurrencyActive,
       setMinicartActive,
     } = this.props;
+
+    const { _formatCurrency } = this;
 
     return (
       <Query query={GET_CURRENCIES}>
@@ -28,14 +34,10 @@ class Currencies extends PureComponent {
                   setCurrencyActive(!currencyActive);
                 }}
               >
-                <i
-                  className={`fa fa-${
-                    currency === "AUD" ? "usd" : currency.toLowerCase()
-                  }`}
-                ></i>
+                <i className={"fa fa-" + _formatCurrency(currency)}></i>
               </span>
 
-              <ul className={currencyActive ? "active" : undefined}>
+              <ul className={currencyActive ? "active" : null}>
                 {data.currencies.map((currency, index) => (
                   <li
                     key={index}
@@ -44,11 +46,7 @@ class Currencies extends PureComponent {
                       setCurrencyActive(false);
                     }}
                   >
-                    <i
-                      className={`fa fa-${
-                        currency === "AUD" ? "usd" : currency.toLowerCase()
-                      }`}
-                    ></i>
+                    <i className={"fa fa-" + _formatCurrency(currency)}></i>
                     {currency}
                   </li>
                 ))}

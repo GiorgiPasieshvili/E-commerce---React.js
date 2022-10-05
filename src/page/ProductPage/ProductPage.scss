@@ -1,7 +1,9 @@
 .details {
-  display: grid;
-  grid-template-columns: 1.8fr 1fr;
-  gap: 5rem;
+  &__row {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 5rem;
+  }
 }
 
 .details .images {
@@ -88,12 +90,7 @@
   font-weight: bold;
 }
 
-.btn-green {
-  height: 3.25rem;
-  margin-bottom: 1.88rem;
-}
-
-.btn-red {
+.button {
   height: 3.25rem;
   margin-bottom: 1.88rem;
 }

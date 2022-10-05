@@ -27,11 +27,11 @@ class Header extends PureComponent {
 
     return (
       <div className="header">
-        <div className="container">
+        <div className="header__row | container">
           <Menu category={category} setCategory={setCategory} />
           <Logo setCategory={setCategory} />
 
-          <div className="features">
+          <div className="header__features">
             <Currencies
               currency={currency}
               setCurrency={setCurrency}

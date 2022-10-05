@@ -6,45 +6,50 @@
   font-weight: 500;
 
   position: relative;
-}
 
-.currencies span {
-  display: inline-block;
-  width: 0.94rem;
-  cursor: pointer;
-}
+  span {
+    display: inline-block;
+    width: 0.94rem;
+    cursor: pointer;
+  }
 
-.currencies ul {
-  display: none;
-  flex-direction: column;
+  ul {
+    flex-direction: column;
 
-  position: absolute;
-  right: 50%;
-  top: 1.88rem;
+    position: absolute;
+    right: 50%;
+    top: 1.88rem;
 
-  background: #fff;
-  padding: 0.63rem 1.56rem;
+    background: #fff;
+    padding: 0.63rem 1.56rem;
 
-  transform: translateX(50%);
-  box-shadow: 0px 0.25rem 2.2rem rgba(168, 172, 176, 0.19);
-}
+    transform: translateX(50%);
+    box-shadow: 0 0.125rem 1rem rgb(168 172 176 / 20%);
 
-.currencies ul li {
-  display: flex;
-  gap: 0.38rem;
+    transition: 150ms;
+    visibility: hidden;
+    opacity: 0;
 
-  margin: 0.63rem 0;
-  transition: 100ms ease-in;
-  cursor: pointer;
-}
+    &.active {
+      visibility: visible;
+      opacity: 1;
+    }
 
-.currencies ul li:hover {
-  font-weight: bold;
-}
-.currencies ul li:hover i {
-  transform: scale(1.1);
-}
+    li {
+      display: flex;
+      gap: 0.38rem;
 
-.currencies .active {
-  display: flex;
+      margin: 0.63rem 0;
+      transition: 100ms ease-in;
+      cursor: pointer;
+
+      &:hover {
+        font-weight: bold;
+
+        i {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
 }
