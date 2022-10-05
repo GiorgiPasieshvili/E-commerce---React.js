@@ -1,0 +1,160 @@
+@forward "reset";
+@use "functions" as fn;
+@use "mixins" as mix;
+
+body {
+  line-height: 1;
+  overflow-x: hidden;
+  font-family: Raleway;
+  font-weight: 400;
+  color: #1d1f22;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.overlay,
+.hidden-overlay {
+  background: #393748;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  opacity: 0.22;
+  z-index: 5;
+}
+
+.hidden-overlay {
+  background: transparent;
+}
+
+.btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.options {
+  font-family: Source Sans Pro;
+  font-weight: 400;
+  font-size: 14px;
+  display: flex;
+}
+
+.options li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid #1d1f22;
+}
+
+.options li:last-child {
+  margin: 0;
+}
+
+.options li:hover,
+.options .active {
+  background: #292929;
+  color: #fff;
+}
+
+.swatch-active {
+  transform: scale(1.1);
+}
+
+.quantity {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quantity button {
+  background: #fff;
+  border: 1px solid #1d1f22;
+  cursor: pointer;
+}
+
+.quantity button:hover {
+  background: #1d1f22;
+  color: #fff;
+}
+
+.btn-light {
+  color: #1d1f22;
+  background: #fff;
+  border: 1px solid #1d1f22;
+}
+
+.btn-green {
+  color: #fff;
+  background: #5ece7b;
+}
+
+.btn-red {
+  background: #ce5e5e;
+  color: #fff;
+  cursor: default !important;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  overflow: hidden;
+  background: #fff;
+  transition: all 0.6s ease-out;
+}
+
+.preloader:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid #fff;
+  border-color: #5ece7b transparent #5ece7b transparent;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: animate-preloader 1.5s linear infinite;
+  animation: animate-preloader 1.5s linear infinite;
+}
+
+@-webkit-keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
