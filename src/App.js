@@ -131,6 +131,13 @@ class App extends Component {
   };
 
   render() {
+    const {
+      minicartActive,
+      currencyActive,
+      setMinicartActive,
+      setCurrencyActive,
+    } = this.state;
+
     return (
       <div className="app">
         <BrowserRouter>
@@ -152,15 +159,16 @@ class App extends Component {
 
           <div
             className={
-              this.state.minicartActive
-                ? "overlay"
-                : this.state.currencyActive
-                ? "hidden-overlay"
-                : undefined
+              "overlay" +
+              (minicartActive
+                ? " active"
+                : currencyActive
+                ? " overlay--hidden active"
+                : "")
             }
             onClick={() => {
-              this.setMinicartActive(false);
-              this.setCurrencyActive(false);
+              setMinicartActive(false);
+              setCurrencyActive(false);
             }}
           ></div>
 

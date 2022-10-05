@@ -15,26 +15,29 @@ body {
   margin: 0 auto;
 }
 
-.overlay,
-.hidden-overlay {
+.overlay {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
+  z-index: 1;
 
-  width: 100vw;
-  height: 100vh;
   background: #393748;
-
-  z-index: 5;
   overflow: hidden;
-  opacity: 0.22;
+
+  transition: opacity 150ms;
+  visibility: hidden;
+  opacity: 0;
+
+  &--hidden {
+    background: transparent;
+  }
+
+  &.active {
+    visibility: visible;
+    opacity: 0.22;
+  }
 }
 
-.hidden-overlay {
-  background: transparent;
-}
-
-.btn {
+.button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,6 +49,23 @@ body {
   border: none;
   cursor: pointer;
   text-transform: uppercase;
+
+  &--light {
+    color: #1d1f22;
+    background: #fff;
+    border: 1px solid #1d1f22;
+  }
+
+  &--green {
+    color: #fff;
+    background: #5ece7b;
+  }
+
+  &--red {
+    color: #fff;
+    background: #ce5e5e;
+    cursor: default !important;
+  }
 }
 
 .options {
@@ -54,29 +74,25 @@ body {
   font-family: Source Sans Pro;
   font-weight: 400;
   font-size: 0.88rem;
-}
 
-.options li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  border: 1px solid #1d1f22;
-  cursor: pointer;
-}
+    border: 1px solid #1d1f22;
+    cursor: pointer;
 
-.options li:last-child {
-  margin: 0;
-}
+    &:last-child {
+      margin: 0;
+    }
 
-.options li:hover,
-.options .active {
-  background: #292929;
-  color: #fff;
-}
-
-.swatch-active {
-  transform: scale(1.1);
+    &:hover,
+    &.active {
+      background: #292929;
+      color: #fff;
+    }
+  }
 }
 
 .quantity {
@@ -84,34 +100,21 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  button {
+    background: #fff;
+    border: 1px solid #1d1f22;
+    cursor: pointer;
+
+    &:hover {
+      background: #1d1f22;
+      color: #fff;
+    }
+  }
 }
 
-.quantity button {
-  background: #fff;
-  border: 1px solid #1d1f22;
-  cursor: pointer;
-}
-
-.quantity button:hover {
-  background: #1d1f22;
-  color: #fff;
-}
-
-.btn-light {
-  color: #1d1f22;
-  background: #fff;
-  border: 1px solid #1d1f22;
-}
-
-.btn-green {
-  color: #fff;
-  background: #5ece7b;
-}
-
-.btn-red {
-  color: #fff;
-  background: #ce5e5e;
-  cursor: default !important;
+.swatch-active {
+  transform: scale(1.1);
 }
 
 .no-margin {
