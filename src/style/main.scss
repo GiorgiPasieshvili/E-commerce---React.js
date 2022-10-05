@@ -3,29 +3,31 @@
 @use "mixins" as mix;
 
 body {
-  line-height: 1;
-  overflow-x: hidden;
   font-family: Raleway;
   font-weight: 400;
+  line-height: 1;
   color: #1d1f22;
+  overflow-x: hidden;
 }
 
 .container {
-  max-width: 1240px;
+  max-width: 77.5rem;
   margin: 0 auto;
 }
 
 .overlay,
 .hidden-overlay {
-  background: #393748;
+  position: fixed;
+  top: 0;
+  left: 0;
+
   width: 100vw;
   height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
+  background: #393748;
+
+  z-index: 5;
   overflow: hidden;
   opacity: 0.22;
-  z-index: 5;
 }
 
 .hidden-overlay {
@@ -33,31 +35,34 @@ body {
 }
 
 .btn {
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 600;
+
   border: none;
   cursor: pointer;
-
-  font-size: 16px;
-  font-weight: 600;
   text-transform: uppercase;
 }
 
 .options {
+  display: flex;
+
   font-family: Source Sans Pro;
   font-weight: 400;
-  font-size: 14px;
-  display: flex;
+  font-size: 0.88rem;
 }
 
 .options li {
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+
   border: 1px solid #1d1f22;
+  cursor: pointer;
 }
 
 .options li:last-child {
@@ -104,8 +109,8 @@ body {
 }
 
 .btn-red {
-  background: #ce5e5e;
   color: #fff;
+  background: #ce5e5e;
   cursor: default !important;
 }
 
