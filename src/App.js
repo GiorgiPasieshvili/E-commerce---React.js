@@ -2,15 +2,15 @@
 import { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+/* Import global styles */
+import "style/main.scss";
+
 /* Import components and pages */
 import Header from "component/Header";
 import HomePage from "page/HomePage";
 import CategoryPage from "page/CategoryPage";
 import ProductPage from "page/ProductPage";
 import CartPage from "page/CartPage";
-
-/* Import global styles */
-import "style/main.scss";
 
 class App extends Component {
   constructor(props) {
