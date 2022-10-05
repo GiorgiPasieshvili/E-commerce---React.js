@@ -5,9 +5,9 @@ import { Query } from "@apollo/client/react/components";
 import { GET_PRODUCT } from "query/product.query";
 import Interweave from "interweave";
 
-import "./Details.scss";
+import "./ProductPage.scss";
 
-class Details extends PureComponent {
+class ProductPage extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -152,4 +152,4 @@ class Details extends PureComponent {
   }
 }
 
-export default withRouter(Details);
+export default withRouter(ProductPage);

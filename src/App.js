@@ -3,10 +3,11 @@ import { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 /* Import components and pages */
-import Header from "component/Header/Header";
-import Products from "component/Products/Products";
-import Details from "component/Details/Details";
-import Cart from "component/Cart/Cart";
+import Header from "component/Header";
+import HomePage from "page/HomePage";
+import CategoryPage from "page/CategoryPage";
+import ProductPage from "page/ProductPage";
+import CartPage from "page/CartPage";
 
 /* Import global styles */
 import "style/main.scss";
@@ -168,7 +169,7 @@ class App extends Component {
               exact
               path="/"
               children={
-                <Products
+                <HomePage
                   currency={this.state.currency}
                   cartItems={this.state.cartItems}
                   onAdd={this.onAdd}
@@ -177,9 +178,9 @@ class App extends Component {
             />
             <Route
               exact
-              path="/category/:category"
+              path="/category/:name"
               children={
-                <Products
+                <CategoryPage
                   currency={this.state.currency}
                   cartItems={this.state.cartItems}
                   onAdd={this.onAdd}
@@ -190,14 +191,17 @@ class App extends Component {
               exact
               path="/product/:id"
               children={
-                <Details currency={this.state.currency} onAdd={this.onAdd} />
+                <ProductPage
+                  currency={this.state.currency}
+                  onAdd={this.onAdd}
+                />
               }
             />
             <Route
               exact
               path="/cart"
               children={
-                <Cart
+                <CartPage
                   cartItems={this.state.cartItems}
                   currency={this.state.currency}
                   onAdd={this.onAdd}

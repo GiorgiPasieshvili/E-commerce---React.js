@@ -1,9 +1,9 @@
 import { PureComponent } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import "./Cart.scss";
+import "./CartPage.scss";
 
-class Cart extends PureComponent {
+class CartPage extends PureComponent {
   render() {
     const { currency, cartItems, onAdd, onRemove, onChange } = this.props;
     const itemsPrice = cartItems.reduce(
@@ -119,4 +119,4 @@ class Cart extends PureComponent {
   }
 }
 
-export default Cart;
+export default CartPage;

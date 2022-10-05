@@ -1,5 +1,5 @@
 import { PureComponent } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Query } from "@apollo/client/react/components";
 import { GET_PRODUCTS } from "query/products.query";
 
@@ -7,7 +7,7 @@ import "./Products.scss";
 
 class Products extends PureComponent {
   render() {
-    const category = this.props.match.params.category || "";
+    const category = this.props.category || "";
     const { currency, cartItems, onAdd } = this.props;
 
     return (
@@ -137,4 +137,4 @@ class Products extends PureComponent {
   }
 }
 
-export default withRouter(Products);
+export default Products;
