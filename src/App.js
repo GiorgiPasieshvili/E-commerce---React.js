@@ -131,12 +131,8 @@ class App extends Component {
   };
 
   render() {
-    const {
-      minicartActive,
-      currencyActive,
-      setMinicartActive,
-      setCurrencyActive,
-    } = this.state;
+    const { minicartActive, currencyActive } = this.state;
+    const { setMinicartActive, setCurrencyActive } = this;
 
     return (
       <div className="app">
