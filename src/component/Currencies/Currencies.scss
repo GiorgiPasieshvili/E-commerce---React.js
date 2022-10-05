@@ -1,43 +1,47 @@
 .currencies {
-  font-size: 18px;
-  font-weight: 500;
   display: flex;
   align-items: center;
+
+  font-size: 1.13rem;
+  font-weight: 500;
+
   position: relative;
 }
 
 .currencies span {
   display: inline-block;
-  cursor: pointer; 
-  width: 15px;
+  width: 0.94rem;
+  cursor: pointer;
 }
 
 .currencies ul {
   display: none;
   flex-direction: column;
 
-  background: #fff;
-  box-shadow: 0px 4px 35px rgba(168, 172, 176, .19);
-  padding: 10px 25px;
-
   position: absolute;
   right: 50%;
-  top: 30px;
+  top: 1.88rem;
+
+  background: #fff;
+  padding: 0.63rem 1.56rem;
+
   transform: translateX(50%);
+  box-shadow: 0px 0.25rem 2.2rem rgba(168, 172, 176, 0.19);
 }
 
 .currencies ul li {
-  cursor: pointer;
   display: flex;
-  margin: 10px 0;
-  gap: 6px;
+  gap: 0.38rem;
+
+  margin: 0.63rem 0;
   transition: 100ms ease-in;
+  cursor: pointer;
 }
 
 .currencies ul li:hover {
   font-weight: bold;
 }
-.currencies ul li:hover  i {
+.currencies ul li:hover i {
   transform: scale(1.1);
 }
 

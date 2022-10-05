@@ -1,0 +1,26 @@
+.menu {
+  display: flex;
+  height: 100%;
+
+  font-size: 1rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.menu li a {
+  display: inline-block;
+  height: 100%;
+  padding: 1.5rem 0.63rem 0;
+}
+
+.menu li:hover {
+  font-weight: 600;
+  color: #5ece7b;
+  border-bottom: 1px solid #5ece7b;
+}
+
+.menu .active {
+  font-weight: 600;
+  color: #5ece7b;
+  border-bottom: 1px solid #5ece7b;
+}

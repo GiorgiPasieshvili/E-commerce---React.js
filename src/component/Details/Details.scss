@@ -1,5 +1,7 @@
 .details {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 5rem;
 }
 
 .details .images {
@@ -9,11 +11,12 @@
 .details .images .others {
   display: flex;
   flex-direction: column;
-  height: 510px;
+
+  height: 31.88rem;
   overflow-y: scroll;
-  
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .details .images .others::-webkit-scrollbar {
@@ -21,38 +24,34 @@
 }
 
 .details .images .others img {
-  width: 80px;
-  height: 80px;
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 2.5rem;
+
   object-fit: cover;
   object-position: center;
   cursor: pointer;
-  margin-bottom: 40px;
-
 }
 
 .details .images .default {
-  width: 610px;
-  height: 510px;
+  width: 38.13rem;
+  height: 31.88rem;
+  margin-left: 2.5rem;
+
   object-fit: cover;
   object-position: center;
-  margin-left: 40px;
-}
-
-.details .info {
-  width: 100%;
-  margin-left: 100px;
 }
 
 .details .info .subheading {
-  font-size: 30px;
+  margin-bottom: 0.75rem;
+  font-size: 1.88rem;
   font-weight: 600;
-  margin-bottom: 12px;
 }
 
 .details .info h2 {
-  font-size: 30px;
+  margin-bottom: 1.88rem;
+  font-size: 1.88rem;
   font-weight: 400;
-  margin-bottom: 30px;
 }
 
 .details .attribute {
@@ -64,43 +63,45 @@
 }
 
 .details .options li {
-  font-family: Source Sans Pro;
-  font-size: 16px;
-
-  width: 60px;
+  width: 3.75rem;
   height: 45px;
-  margin-right: 12px;
+  margin-right: 0.81rem;
+
+  font-family: Source Sans Pro;
+  font-size: 1rem;
 }
 
 .details .heading {
   display: block;
+  margin-bottom: 0.75rem;
+
   font-family: Roboto Condensed;
-  font-size: 18px;
+  font-size: 1.13rem;
   text-transform: uppercase;
-  margin-bottom: 12px;
 }
 
 .details .amount {
   display: block;
-  font-size: 24px;
+  margin-bottom: 1.5rem;
+
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 24px;
 }
 
 .btn-green {
-  height: 52px;
-  margin-bottom: 30px;
+  height: 3.25rem;
+  margin-bottom: 1.88rem;
 }
 
 .btn-red {
-  height: 52px;
-  margin-bottom: 30px;
+  height: 3.25rem;
+  margin-bottom: 1.88rem;
 }
 
 .description {
   font-family: Roboto;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .description ul {
@@ -109,13 +110,13 @@
 
 .description p,
 .description li {
+  margin-bottom: 1.5rem;
   line-height: 1.6;
-  margin-bottom: 24px;
 }
 
 .description h1,
 .description h3 {
-  font-size: 18px;
+  margin-bottom: 0.63rem;
+  font-size: 1.13rem;
   font-weight: 500;
-  margin-bottom: 10px;
 }
