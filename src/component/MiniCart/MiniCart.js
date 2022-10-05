@@ -22,7 +22,7 @@ class MiniCart extends PureComponent {
     } = this.props;
 
     const currencyIcon = getCurrencyIcon(currency);
-    const totalPrice = getTotalPrice(cartItems);
+    const totalPrice = getTotalPrice(cartItems, currency);
     const totalItems = getTotalProducts(cartItems);
 
     return (

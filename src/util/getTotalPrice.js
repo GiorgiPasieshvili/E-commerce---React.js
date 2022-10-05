@@ -1,4 +1,4 @@
-function calcTotalPrice(products) {
+function calcTotalPrice(products, currency) {
   return products
     .reduce(
       (total, item) =>

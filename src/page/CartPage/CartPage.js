@@ -13,7 +13,7 @@ class CartPage extends PureComponent {
   render() {
     const { currency, cartItems, onAdd, onRemove, onChange } = this.props;
 
-    const totalPrice = getTotalPrice(cartItems);
+    const totalPrice = getTotalPrice(cartItems, currency);
 
     return (
       <div className="cart">
