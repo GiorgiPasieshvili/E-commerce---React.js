@@ -1,14 +1,11 @@
 import { PureComponent } from "react";
 import { Query } from "@apollo/client/react/components";
 import { GET_CURRENCIES } from "query/currencies.query";
+import getCurrencyIcon from "util/getCurrencyIcon";
 
 import "./Currencies.scss";
 
 class Currencies extends PureComponent {
-  _formatCurrency(currency) {
-    return currency === "AUD" ? "usd" : currency.toLowerCase();
-  }
-
   render() {
     const {
       currency,
@@ -17,8 +14,6 @@ class Currencies extends PureComponent {
       setCurrencyActive,
       setMinicartActive,
     } = this.props;
-
-    const { _formatCurrency } = this;
 
     return (
       <Query query={GET_CURRENCIES}>
@@ -34,7 +29,7 @@ class Currencies extends PureComponent {
                   setCurrencyActive(!currencyActive);
                 }}
               >
-                <i className={"fa fa-" + _formatCurrency(currency)}></i>
+                {getCurrencyIcon(currency)}
               </span>
 
               <ul className={currencyActive ? "active" : null}>
@@ -46,7 +41,7 @@ class Currencies extends PureComponent {
                       setCurrencyActive(false);
                     }}
                   >
-                    <i className={"fa fa-" + _formatCurrency(currency)}></i>
+                    {getCurrencyIcon(currency)}
                     {currency}
                   </li>
                 ))}

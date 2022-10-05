@@ -1,9 +1,13 @@
 import { PureComponent } from "react";
 import { withRouter } from "react-router-dom";
+import Interweave from "interweave";
 
+/* Import graphql stuff */
 import { Query } from "@apollo/client/react/components";
 import { GET_PRODUCT } from "query/product.query";
-import Interweave from "interweave";
+
+/* Import custom utils */
+import getCurrencyIcon from "util/getCurrencyIcon";
 
 import "./ProductPage.scss";
 
@@ -115,11 +119,7 @@ class ProductPage extends PureComponent {
 
                   <span className="heading">price:</span>
                   <span className="amount">
-                    <i
-                      className={`fa fa-${
-                        currency === "AUD" ? "usd" : currency.toLowerCase()
-                      }`}
-                    ></i>
+                    {getCurrencyIcon(currency)}
                     {
                       product.prices.find(
                         (price) => price.currency === currency
@@ -128,7 +128,9 @@ class ProductPage extends PureComponent {
                   </span>
 
                   <button
-                    className={`button button--${product.inStock ? "green" : "red"}`}
+                    className={`button button--${
+                      product.inStock ? "green" : "red"
+                    }`}
                     onClick={() => {
                       if (product.inStock) {
                         onAdd(product, this.state.selectedOptions);

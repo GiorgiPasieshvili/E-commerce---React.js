@@ -1,37 +1,35 @@
+/* Import components and utils */
 import { PureComponent } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+
+/* Import custom utils */
+import getCurrencyIcon from "util/getCurrencyIcon";
+import getTotalPrice from "util/getTotalPrice";
+
 import "./CartPage.scss";
 
 class CartPage extends PureComponent {
   render() {
     const { currency, cartItems, onAdd, onRemove, onChange } = this.props;
-    const itemsPrice = cartItems.reduce(
-      (a, c) =>
-        a +
-        c.prices.find((price) => price.currency === currency).amount * c.qty,
-      0
-    );
+
+    const totalPrice = getTotalPrice(cartItems);
 
     return (
       <div className="cart">
         <div className="container">
-          <h2>cart</h2>
-          <ul>
+          <h2 className="cart__heading">cart</h2>
+          <ul className="cart__list">
             {cartItems
               .slice(0)
               .reverse()
               .map((product) => (
-                <li key={product.uniqueId}>
+                <li key={product.uniqueId} className="cart__item">
                   <div>
                     <h4>{product.brand}</h4>
                     <h3>{product.name}</h3>
                     <span className="price">
-                      <i
-                        className={`fa fa-${
-                          currency === "AUD" ? "usd" : currency.toLowerCase()
-                        }`}
-                      ></i>
+                      {getCurrencyIcon(currency)}
                       {
                         product.prices.find(
                           (price) => price.currency === currency
@@ -104,12 +102,8 @@ class CartPage extends PureComponent {
             <div>
               <span>Total:</span>
               <span>
-                <i
-                  className={`fa fa-${
-                    currency === "AUD" ? "usd" : currency.toLowerCase()
-                  }`}
-                ></i>
-                {itemsPrice.toFixed(2)}
+                {getCurrencyIcon(currency)}
+                {totalPrice}
               </span>
             </div>
 

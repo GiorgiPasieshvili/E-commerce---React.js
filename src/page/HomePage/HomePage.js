@@ -1,9 +1,9 @@
 import { PureComponent } from "react";
-import Products from "component/Products";
+import ProductGrid from "component/ProductGrid";
 
 class HomePage extends PureComponent {
   render() {
-    return <Products {...this.props} />;
+    return <ProductGrid {...this.props} />;
   }
 }
 

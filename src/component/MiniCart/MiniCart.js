@@ -1,13 +1,14 @@
 import { PureComponent } from "react";
 import { Link } from "react-router-dom";
 
+/* Import custom utils */
+import getCurrencyIcon from "util/getCurrencyIcon";
+import getTotalPrice from "util/getTotalPrice";
+import getTotalProducts from "util/getTotalProducts";
+
 import "./MiniCart.scss";
 
 class MiniCart extends PureComponent {
-  _formatCurrency(currency) {
-    return currency === "AUD" ? "usd" : currency.toLowerCase();
-  }
-
   render() {
     const {
       cartItems,
@@ -20,16 +21,9 @@ class MiniCart extends PureComponent {
       onChange,
     } = this.props;
 
-    const { _formatCurrency } = this;
-
-    const itemsPrice = cartItems.reduce(
-      (a, c) =>
-        a +
-        c.prices.find((price) => price.currency === currency).amount * c.qty,
-      0
-    );
-
-    const totalItems = cartItems.reduce((a, c) => a + c.qty, 0);
+    const currencyIcon = getCurrencyIcon(currency);
+    const totalPrice = getTotalPrice(cartItems);
+    const totalItems = getTotalProducts(cartItems);
 
     return (
       <div className="minicart-wrapper">
@@ -60,7 +54,7 @@ class MiniCart extends PureComponent {
                     <h3>{product.brand}</h3>
                     <h2>{product.name}</h2>
                     <span className="price">
-                      <i className={"fa fa-" + _formatCurrency(currency)}></i>
+                      {currencyIcon}
                       {
                         product.prices.find(
                           (price) => price.currency === currency
@@ -124,12 +118,8 @@ class MiniCart extends PureComponent {
           <div className="total">
             <span>Total</span>
             <span>
-              <i
-                className={`fa fa-${
-                  currency === "AUD" ? "usd" : currency.toLowerCase()
-                }`}
-              ></i>
-              {itemsPrice.toFixed(2)}
+              {currencyIcon}
+              {totalPrice}
             </span>
           </div>
 
