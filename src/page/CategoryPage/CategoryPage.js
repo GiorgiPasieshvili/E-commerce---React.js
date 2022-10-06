@@ -6,7 +6,7 @@ class CategoryPage extends PureComponent {
   render() {
     const { name } = this.props.match.params;
 
-    return <ProductGrid {...this.props} category={name} />;
+    return <ProductGrid category={name} />;
   }
 }
 

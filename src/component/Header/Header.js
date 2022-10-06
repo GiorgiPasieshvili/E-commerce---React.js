@@ -9,8 +9,6 @@ import "./Header.scss";
 
 class Header extends PureComponent {
   render() {
-    const { cartItems, setCartItems, onAdd, onRemove, onChange } = this.props;
-
     return (
       <div className="header">
         <div className="header__row | container">
@@ -19,14 +17,7 @@ class Header extends PureComponent {
 
           <div className="header__features">
             <Currencies />
-
-            <MiniCart
-              cartItems={cartItems}
-              setCartItems={setCartItems}
-              onAdd={onAdd}
-              onRemove={onRemove}
-              onChange={onChange}
-            />
+            <MiniCart />
           </div>
         </div>
       </div>

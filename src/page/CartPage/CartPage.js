@@ -5,6 +5,11 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 /* Redux Stuff */
 import { connect } from "react-redux";
+import {
+  addProduct,
+  removeProduct,
+  changeProduct,
+} from "store/cartProductsSlice";
 
 /* Import custom utils */
 import getCurrencyIcon from "util/getCurrencyIcon";
@@ -15,15 +20,26 @@ import "./CartPage.scss";
 
 const mapStateToProps = (state) => ({
   currentCurrency: state.currency.current,
+  cartProducts: state.cartProducts.cartProducts,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addProduct: (payload) => dispatch(addProduct(payload)),
+  removeProduct: (payload) => dispatch(removeProduct(payload)),
+  changeProduct: (payload) => dispatch(changeProduct(payload)),
 });
 
 class CartPage extends PureComponent {
   render() {
-    const { cartItems, onAdd, onRemove, onChange } = this.props;
+    const {
+      currentCurrency,
+      cartProducts,
+      addProduct,
+      removeProduct,
+      changeProduct,
+    } = this.props;
 
-    const { currentCurrency } = this.props;
-
-    const totalPrice = getTotalPrice(cartItems, currentCurrency);
+    const totalPrice = getTotalPrice(cartProducts, currentCurrency);
 
     return (
       <div className="cart">
@@ -32,7 +48,7 @@ class CartPage extends PureComponent {
 
           {/* List of Products */}
           <ul className="cart__list">
-            {cartItems
+            {cartProducts
               .slice(0)
               .reverse()
               .map((product) => (
@@ -53,7 +69,7 @@ class CartPage extends PureComponent {
                           key={attribute.id}
                         >
                           {attribute.items.map((item) => {
-                            const selectedItem = product.selectedOptions.find(
+                            const selectedItem = product.options.find(
                               (option) =>
                                 option.id === attribute.id &&
                                 option.value === item.value
@@ -63,7 +79,11 @@ class CartPage extends PureComponent {
                               <li
                                 style={{ background: item.value }}
                                 onClick={() =>
-                                  onChange(product, attribute.id, item.value)
+                                  changeProduct({
+                                    product: product,
+                                    id: attribute.id,
+                                    value: item.value,
+                                  })
                                 }
                                 className={
                                   selectedItem ? "active-swatch" : null
@@ -73,7 +93,11 @@ class CartPage extends PureComponent {
                             ) : (
                               <li
                                 onClick={() =>
-                                  onChange(product, attribute.id, item.value)
+                                  changeProduct({
+                                    product: product,
+                                    id: attribute.id,
+                                    value: item.value,
+                                  })
                                 }
                                 className={selectedItem ? "active" : null}
                                 key={item.id}
@@ -89,9 +113,11 @@ class CartPage extends PureComponent {
 
                   <div className="cart__row">
                     <div className="cart__quantity quantity">
-                      <button onClick={() => onAdd(product)}>+</button>
+                      <button onClick={() => addProduct({ product })}>+</button>
                       <span>{product.qty}</span>
-                      <button onClick={() => onRemove(product)}>-</button>
+                      <button onClick={() => removeProduct({ product })}>
+                        -
+                      </button>
                     </div>
 
                     <Carousel
@@ -128,4 +154,4 @@ class CartPage extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps)(CartPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CartPage);

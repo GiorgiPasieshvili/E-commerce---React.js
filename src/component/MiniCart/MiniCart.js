@@ -5,6 +5,11 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { miniCartToggle, miniCartDisable } from "store/miniCartSlice";
 import { currenciesDisable } from "store/currenciesSlice";
+import {
+  addProduct,
+  removeProduct,
+  changeProduct,
+} from "store/cartProductsSlice";
 
 /* Import Custom Utils */
 import getCurrencyIcon from "util/getCurrencyIcon";
@@ -17,29 +22,35 @@ import "./MiniCart.scss";
 const mapStateToProps = (state) => ({
   isMiniCartActive: state.miniCart.isActive,
   currentCurrency: state.currency.current,
+  cartProducts: state.cartProducts.cartProducts,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   miniCartToggle: () => dispatch(miniCartToggle()),
   miniCartDisable: () => dispatch(miniCartDisable()),
   currenciesDisable: () => dispatch(currenciesDisable()),
+  addProduct: (payload) => dispatch(addProduct(payload)),
+  removeProduct: (payload) => dispatch(removeProduct(payload)),
+  changeProduct: (payload) => dispatch(changeProduct(payload)),
 });
 
 class MiniCart extends PureComponent {
   render() {
-    const { cartItems, onAdd, onRemove, onChange } = this.props;
-
     const {
       isMiniCartActive,
       miniCartToggle,
       miniCartDisable,
       currenciesDisable,
       currentCurrency,
+      cartProducts,
+      addProduct,
+      removeProduct,
+      changeProduct,
     } = this.props;
 
     const currencyIcon = getCurrencyIcon(currentCurrency);
-    const totalPrice = getTotalPrice(cartItems, currentCurrency);
-    const totalItems = getTotalProducts(cartItems);
+    const totalPrice = getTotalPrice(cartProducts, currentCurrency);
+    const totalItems = getTotalProducts(cartProducts);
 
     return (
       <div className="minicart">
@@ -61,12 +72,12 @@ class MiniCart extends PureComponent {
           className={"minicart__wrapper" + (isMiniCartActive ? " active" : "")}
         >
           <h4 className="minicart__heading">
-            My Bag, <span>{cartItems.length} items</span>
+            My Bag, <span>{cartProducts.length} items</span>
           </h4>
 
           <ul className="minicart__list">
-            {cartItems
-              .slice(cartItems.length - 2, cartItems.length)
+            {cartProducts
+              .slice(cartProducts.length - 2, cartProducts.length)
               .reverse()
               .map((product) => (
                 <li className="minicart__item" key={product.uniqueId}>
@@ -89,7 +100,7 @@ class MiniCart extends PureComponent {
                         </span>
                         <ul className="minicart__options options">
                           {attribute.items.map((item) => {
-                            const selectedItem = product.selectedOptions.find(
+                            const selectedItem = product.options.find(
                               (option) =>
                                 option.id === attribute.id &&
                                 option.value === item.value
@@ -101,7 +112,11 @@ class MiniCart extends PureComponent {
                                   width: "1.25rem",
                                 }}
                                 onClick={() =>
-                                  onChange(product, attribute.id, item.value)
+                                  changeProduct({
+                                    product,
+                                    id: attribute.id,
+                                    value: item.value,
+                                  })
                                 }
                                 className={
                                   selectedItem ? "active-swatch" : null
@@ -112,7 +127,11 @@ class MiniCart extends PureComponent {
                               <li
                                 className={selectedItem ? "active" : null}
                                 onClick={() =>
-                                  onChange(product, attribute.id, item.value)
+                                  changeProduct({
+                                    product,
+                                    id: attribute.id,
+                                    value: item.value,
+                                  })
                                 }
                                 key={item.id}
                               >
@@ -128,9 +147,11 @@ class MiniCart extends PureComponent {
                   {/* Product image & quantity control */}
                   <div className="minicart__row">
                     <div className="minicart__quantity quantity">
-                      <button onClick={() => onAdd(product)}>+</button>
+                      <button onClick={() => addProduct({ product })}>+</button>
                       <span>{product.qty}</span>
-                      <button onClick={() => onRemove(product)}>-</button>
+                      <button onClick={() => removeProduct({ product })}>
+                        -
+                      </button>
                     </div>
                     <div className="minicart__image">
                       <img src={product.gallery[0]} alt={product.name} />

@@ -4,6 +4,7 @@ import Interweave from "interweave";
 
 /* Redux Stuff */
 import { connect } from "react-redux";
+import { addProduct } from "store/cartProductsSlice";
 
 /* Import Graphql Stuff */
 import { Query } from "@apollo/client/react/components";
@@ -17,6 +18,10 @@ import "./ProductPage.scss";
 
 const mapStateToProps = (state) => ({
   currentCurrency: state.currency.current,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addProduct: (payload) => dispatch(addProduct(payload)),
 });
 
 class ProductPage extends PureComponent {
@@ -53,7 +58,14 @@ class ProductPage extends PureComponent {
   };
 
   addToCart = (product) => {
-    this.props.onAdd(product, this.state.selectedOptions);
+    const { addProduct } = this.props;
+
+    const payload = {
+      product: product,
+      options: this.state.selectedOptions,
+    };
+
+    addProduct(payload);
     this.setState((state) => ({
       ...state,
       selectedOptions: [],
@@ -172,4 +184,7 @@ class ProductPage extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps)(withRouter(ProductPage));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(ProductPage));

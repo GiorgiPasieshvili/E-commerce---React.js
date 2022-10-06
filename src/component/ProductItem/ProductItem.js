@@ -3,18 +3,22 @@ import { Link } from "react-router-dom";
 import getCurrencyIcon from "util/getCurrencyIcon";
 
 import { connect } from "react-redux";
+import { addProduct } from "store/cartProductsSlice";
 
 import "./ProductItem.scss";
 
 const mapStateToProps = (state) => ({
   currentCurrency: state.currency.current,
+  cartProducts: state.cartProducts.cartProducts,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addProduct: (payload) => dispatch(addProduct(payload)),
 });
 
 class ProductItem extends PureComponent {
   render() {
-    const { cartItems, onAdd, product } = this.props;
-
-    const { currentCurrency } = this.props;
+    const { currentCurrency, cartProducts, addProduct, product } = this.props;
 
     return (
       <li className="product-item">
@@ -26,7 +30,7 @@ class ProductItem extends PureComponent {
           )}
 
           {/* Render icon for products which are in cart */}
-          {cartItems.find((item) => item.id === product.id) && (
+          {cartProducts.find((item) => item.id === product.id) && (
             <img
               className="product-item__icon"
               src="/images/greencart.svg"
@@ -65,7 +69,7 @@ class ProductItem extends PureComponent {
             <button
               className="product-item__button button button--green"
               onClick={() => {
-                onAdd(product);
+                addProduct({ product });
               }}
             >
               add to cart
@@ -77,4 +81,4 @@ class ProductItem extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps)(ProductItem);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductItem);

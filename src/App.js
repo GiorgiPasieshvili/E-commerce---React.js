@@ -28,91 +28,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cartItems: [],
-    };
-  }
-
-  setCartItems = (products) => {
-    this.setState((state) => ({
-      ...state,
-      cartItems: products,
-    }));
-  };
-
-  onAdd = (product, selectedOptions) => {
-    const { cartItems } = this.state;
-    const { setCartItems } = this;
-
-    if (!selectedOptions) {
-      selectedOptions = product.selectedOptions ? product.selectedOptions : [];
-    }
-
-    const sameProduct = cartItems
-      .filter((x) => x.id === product.id)
-      .find(
-        (x) =>
-          JSON.stringify(x.selectedOptions) === JSON.stringify(selectedOptions)
-      );
-
-    if (sameProduct) {
-      setCartItems(
-        cartItems.map((x) =>
-          x.uniqueId === sameProduct.uniqueId
-            ? { ...sameProduct, qty: sameProduct.qty + 1 }
-            : x
-        )
-      );
-    } else {
-      setCartItems([
-        ...cartItems,
-        {
-          ...product,
-          uniqueId: cartItems[0]
-            ? cartItems[cartItems.length - 1].uniqueId + 1
-            : 0,
-          qty: 1,
-          selectedOptions,
-        },
-      ]);
-    }
-  };
-
-  onRemove = (product) => {
-    const exist = this.state.cartItems.find(
-      (x) => x.uniqueId === product.uniqueId
-    );
-    if (exist.qty === 1) {
-      this.setCartItems(
-        this.state.cartItems.filter((x) => x.uniqueId !== product.uniqueId)
-      );
-    } else {
-      this.setCartItems(
-        this.state.cartItems.map((x) =>
-          x.uniqueId === product.uniqueId ? { ...exist, qty: exist.qty - 1 } : x
-        )
-      );
-    }
-  };
-
-  onChange = (product, id, value) => {
-    this.setCartItems(
-      this.state.cartItems.map((x) =>
-        x.uniqueId === product.uniqueId
-          ? {
-              ...product,
-              selectedOptions: [
-                ...product.selectedOptions.filter((option) => option.id !== id),
-                { id, value },
-              ],
-            }
-          : x
-      )
-    );
-  };
-
   render() {
     const {
       isMiniCartActive,
@@ -124,13 +39,7 @@ class App extends Component {
     return (
       <div className="app">
         <BrowserRouter>
-          <Header
-            cartItems={this.state.cartItems}
-            setCartItem={this.setCartItems}
-            onAdd={this.onAdd}
-            onRemove={this.onRemove}
-            onChange={this.onChange}
-          />
+          <Header />
 
           <div
             className={
@@ -148,46 +57,10 @@ class App extends Component {
           ></div>
 
           <Switch>
-            <Route
-              exact
-              path="/"
-              children={
-                <HomePage cartItems={this.state.cartItems} onAdd={this.onAdd} />
-              }
-            />
-            <Route
-              exact
-              path="/category/:name"
-              children={
-                <CategoryPage
-                  cartItems={this.state.cartItems}
-                  onAdd={this.onAdd}
-                />
-              }
-            />
-            <Route
-              exact
-              path="/product/:id"
-              children={
-                <ProductPage
-                  currency={this.state.currency}
-                  onAdd={this.onAdd}
-                />
-              }
-            />
-            <Route
-              exact
-              path="/cart"
-              children={
-                <CartPage
-                  cartItems={this.state.cartItems}
-                  currency={this.state.currency}
-                  onAdd={this.onAdd}
-                  onRemove={this.onRemove}
-                  onChange={this.onChange}
-                />
-              }
-            />
+            <Route exact path="/" children={<HomePage />} />
+            <Route exact path="/category/:name" children={<CategoryPage />} />
+            <Route exact path="/product/:id" children={<ProductPage />} />
+            <Route exact path="/cart" children={<CartPage />} />
           </Switch>
         </BrowserRouter>
       </div>

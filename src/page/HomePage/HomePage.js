@@ -3,7 +3,7 @@ import ProductGrid from "component/ProductGrid";
 
 class HomePage extends PureComponent {
   render() {
-    return <ProductGrid {...this.props} />;
+    return <ProductGrid />;
   }
 }
 
