@@ -10,7 +10,7 @@ import "./Header.scss";
 class Header extends PureComponent {
   render() {
     return (
-      <div className="header">
+      <header className="header">
         <div className="header__row | container">
           <Menu />
           <Logo />
@@ -20,7 +20,7 @@ class Header extends PureComponent {
             <MiniCart />
           </div>
         </div>
-      </div>
+      </header>
     );
   }
 }
