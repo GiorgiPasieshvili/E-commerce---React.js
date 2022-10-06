@@ -1,11 +1,12 @@
 import { PureComponent } from "react";
 import { Link } from "react-router-dom";
 
+/* Redux Stuff */
 import { connect } from "react-redux";
 import { miniCartToggle, miniCartDisable } from "store/miniCartSlice";
 import { currenciesDisable } from "store/currenciesSlice";
 
-/* Import custom utils */
+/* Import Custom Utils */
 import getCurrencyIcon from "util/getCurrencyIcon";
 import getCurrencyAmount from "util/getCurrencyAmount";
 import getTotalPrice from "util/getTotalPrice";
@@ -15,6 +16,7 @@ import "./MiniCart.scss";
 
 const mapStateToProps = (state) => ({
   isMiniCartActive: state.miniCart.isActive,
+  currentCurrency: state.currency.current,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -25,24 +27,19 @@ const mapDispatchToProps = (dispatch) => ({
 
 class MiniCart extends PureComponent {
   render() {
-    const {
-      cartItems,
-      currency,
-      onAdd,
-      onRemove,
-      onChange,
-    } = this.props;
-
-    const currencyIcon = getCurrencyIcon(currency);
-    const totalPrice = getTotalPrice(cartItems, currency);
-    const totalItems = getTotalProducts(cartItems);
+    const { cartItems, onAdd, onRemove, onChange } = this.props;
 
     const {
       isMiniCartActive,
       miniCartToggle,
       miniCartDisable,
       currenciesDisable,
+      currentCurrency,
     } = this.props;
+
+    const currencyIcon = getCurrencyIcon(currentCurrency);
+    const totalPrice = getTotalPrice(cartItems, currentCurrency);
+    const totalItems = getTotalProducts(cartItems);
 
     return (
       <div className="minicart">
@@ -81,7 +78,7 @@ class MiniCart extends PureComponent {
                     {/* Product Price */}
                     <span className="minicart__price">
                       {currencyIcon}
-                      {getCurrencyAmount(product, currency)}
+                      {getCurrencyAmount(product, currentCurrency)}
                     </span>
 
                     {/* Render Product Attributes */}

@@ -2,11 +2,19 @@ import { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import getCurrencyIcon from "util/getCurrencyIcon";
 
+import { connect } from "react-redux";
+
 import "./ProductItem.scss";
+
+const mapStateToProps = (state) => ({
+  currentCurrency: state.currency.current,
+});
 
 class ProductItem extends PureComponent {
   render() {
-    const { currency, cartItems, onAdd, product } = this.props;
+    const { cartItems, onAdd, product } = this.props;
+
+    const { currentCurrency } = this.props;
 
     return (
       <li className="product-item">
@@ -43,10 +51,13 @@ class ProductItem extends PureComponent {
         <div className="product-item__row">
           {/* Render price */}
           <span className="product-item__price">
-            {getCurrencyIcon(currency)}
+            {getCurrencyIcon(currentCurrency)}
 
             {/* Find correct price by chosen currency */}
-            {product.prices.find((price) => price.currency === currency).amount}
+            {
+              product.prices.find((price) => price.currency === currentCurrency)
+                .amount
+            }
           </span>
 
           {/* Render button if product is in stock */}
@@ -66,4 +77,4 @@ class ProductItem extends PureComponent {
   }
 }
 
-export default ProductItem;
+export default connect(mapStateToProps)(ProductItem);

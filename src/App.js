@@ -32,8 +32,7 @@ class App extends Component {
     super(props);
     this.state = {
       category: "",
-      currency: "USD",
-      cartItems: []
+      cartItems: [],
     };
   }
 
@@ -41,13 +40,6 @@ class App extends Component {
     this.setState((state) => ({
       ...state,
       category: category,
-    }));
-  };
-
-  setCurrency = (currency) => {
-    this.setState((state) => ({
-      ...state,
-      currency: currency,
     }));
   };
 
@@ -143,8 +135,6 @@ class App extends Component {
           <Header
             category={this.state.category}
             setCategory={this.setCategory}
-            currency={this.state.currency}
-            setCurrency={this.setCurrency}
             cartItems={this.state.cartItems}
             setCartItem={this.setCartItems}
             onAdd={this.onAdd}
@@ -172,11 +162,7 @@ class App extends Component {
               exact
               path="/"
               children={
-                <HomePage
-                  currency={this.state.currency}
-                  cartItems={this.state.cartItems}
-                  onAdd={this.onAdd}
-                />
+                <HomePage cartItems={this.state.cartItems} onAdd={this.onAdd} />
               }
             />
             <Route
@@ -184,7 +170,6 @@ class App extends Component {
               path="/category/:name"
               children={
                 <CategoryPage
-                  currency={this.state.currency}
                   cartItems={this.state.cartItems}
                   onAdd={this.onAdd}
                 />

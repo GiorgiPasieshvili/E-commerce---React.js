@@ -3,6 +3,9 @@ import { PureComponent } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
+/* Redux Stuff */
+import { connect } from "react-redux";
+
 /* Import custom utils */
 import getCurrencyIcon from "util/getCurrencyIcon";
 import getTotalPrice from "util/getTotalPrice";
@@ -10,11 +13,17 @@ import getCurrencyAmount from "util/getCurrencyAmount";
 
 import "./CartPage.scss";
 
+const mapStateToProps = (state) => ({
+  currentCurrency: state.currency.current,
+});
+
 class CartPage extends PureComponent {
   render() {
-    const { currency, cartItems, onAdd, onRemove, onChange } = this.props;
+    const { cartItems, onAdd, onRemove, onChange } = this.props;
 
-    const totalPrice = getTotalPrice(cartItems, currency);
+    const { currentCurrency } = this.props;
+
+    const totalPrice = getTotalPrice(cartItems, currentCurrency);
 
     return (
       <div className="cart">
@@ -32,14 +41,17 @@ class CartPage extends PureComponent {
                     <h4 className="cart__subtitle">{product.brand}</h4>
                     <h3 className="cart__title">{product.name}</h3>
                     <span className="cart__price">
-                      {getCurrencyIcon(currency)}
-                      {getCurrencyAmount(product, currency)}
+                      {getCurrencyIcon(currentCurrency)}
+                      {getCurrencyAmount(product, currentCurrency)}
                     </span>
 
                     {/* Product Attributes */}
                     <div className="cart__attributes">
                       {product.attributes.map((attribute) => (
-                        <ul className="cart__options options" key={attribute.id}>
+                        <ul
+                          className="cart__options options"
+                          key={attribute.id}
+                        >
                           {attribute.items.map((item) => {
                             const selectedItem = product.selectedOptions.find(
                               (option) =>
@@ -102,7 +114,7 @@ class CartPage extends PureComponent {
           {/* Cart Checkout Area */}
           <div className="cart__checkout">
             <div className="cart__total-price">
-              Total: {getCurrencyIcon(currency)}
+              Total: {getCurrencyIcon(currentCurrency)}
               {totalPrice}
             </div>
 
@@ -116,4 +128,4 @@ class CartPage extends PureComponent {
   }
 }
 
-export default CartPage;
+export default connect(mapStateToProps)(CartPage);

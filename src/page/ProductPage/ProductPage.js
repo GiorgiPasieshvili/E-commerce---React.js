@@ -2,6 +2,9 @@ import { PureComponent } from "react";
 import { withRouter } from "react-router-dom";
 import Interweave from "interweave";
 
+/* Redux Stuff */
+import { connect } from "react-redux";
+
 /* Import Graphql Stuff */
 import { Query } from "@apollo/client/react/components";
 import { GET_PRODUCT } from "query/product.query";
@@ -11,6 +14,10 @@ import getCurrencyIcon from "util/getCurrencyIcon";
 import getCurrencyAmount from "util/getCurrencyAmount";
 
 import "./ProductPage.scss";
+
+const mapStateToProps = (state) => ({
+  currentCurrency: state.currency.current,
+});
 
 class ProductPage extends PureComponent {
   constructor(props) {
@@ -55,8 +62,7 @@ class ProductPage extends PureComponent {
 
   render() {
     const id = this.props.match.params.id || "";
-    const { currency } = this.props;
-    const { addToCart } = this;
+    const { currentCurrency } = this.props;
 
     return (
       <Query query={GET_PRODUCT} variables={{ name: id }}>
@@ -133,8 +139,8 @@ class ProductPage extends PureComponent {
                   <div className="product__attribute">
                     <span className="product__label">price:</span>
                     <span className="product__price">
-                      {getCurrencyIcon(currency)}
-                      {getCurrencyAmount(product, currency)}
+                      {getCurrencyIcon(currentCurrency)}
+                      {getCurrencyAmount(product, currentCurrency)}
                     </span>
                   </div>
 
@@ -142,7 +148,7 @@ class ProductPage extends PureComponent {
                   {product.inStock ? (
                     <button
                       className="product__button button button--green"
-                      onClick={() => addToCart(product)}
+                      onClick={() => this.addToCart(product)}
                     >
                       ADD TO CART
                     </button>
@@ -166,4 +172,4 @@ class ProductPage extends PureComponent {
   }
 }
 
-export default withRouter(ProductPage);
+export default connect(mapStateToProps)(withRouter(ProductPage));

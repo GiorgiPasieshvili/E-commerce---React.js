@@ -12,8 +12,6 @@ class Header extends PureComponent {
     const {
       category,
       setCategory,
-      currency,
-      setCurrency,
       cartItems,
       setCartItems,
       onAdd,
@@ -28,13 +26,9 @@ class Header extends PureComponent {
           <Logo setCategory={setCategory} />
 
           <div className="header__features">
-            <Currencies
-              currency={currency}
-              setCurrency={setCurrency}
-            />
+            <Currencies />
 
             <MiniCart
-              currency={currency}
               cartItems={cartItems}
               setCartItems={setCartItems}
               onAdd={onAdd}

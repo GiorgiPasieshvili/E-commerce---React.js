@@ -9,28 +9,31 @@ import { GET_CURRENCIES } from "query/currencies.query";
 import { connect } from "react-redux";
 import { miniCartDisable } from "store/miniCartSlice";
 import { currenciesToggle, currenciesDisable } from "store/currenciesSlice";
+import { changeCurrency } from "store/currencySlice";
 
 import "./Currencies.scss";
 
 const mapStateToProps = (state) => ({
   isCurrenciesActive: state.currencies.isActive,
+  currentCurrency: state.currency.current,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   currenciesToggle: () => dispatch(currenciesToggle()),
   currenciesDisable: () => dispatch(currenciesDisable()),
   miniCartDisable: () => dispatch(miniCartDisable()),
+  changeCurrency: (payload) => dispatch(changeCurrency(payload)),
 });
 
 class Currencies extends PureComponent {
   render() {
-    const { currency, setCurrency } = this.props;
-
     const {
       isCurrenciesActive,
       currenciesToggle,
       currenciesDisable,
       miniCartDisable,
+      currentCurrency,
+      changeCurrency,
     } = this.props;
 
     return (
@@ -47,20 +50,20 @@ class Currencies extends PureComponent {
                   currenciesToggle();
                 }}
               >
-                {getCurrencyIcon(currency)}
+                {getCurrencyIcon(currentCurrency)}
               </span>
 
               <ul className={isCurrenciesActive ? "active" : null}>
-                {data.currencies.map((currency, index) => (
+                {data.currencies.map((currencyItem, index) => (
                   <li
                     key={index}
                     onClick={() => {
-                      setCurrency(currency);
+                      changeCurrency(currencyItem);
                       currenciesDisable();
                     }}
                   >
-                    {getCurrencyIcon(currency)}
-                    {currency}
+                    {getCurrencyIcon(currencyItem)}
+                    {currencyItem}
                   </li>
                 ))}
               </ul>
