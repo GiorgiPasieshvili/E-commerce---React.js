@@ -14,7 +14,7 @@ import {
 /* Import custom utils */
 import getCurrencyIcon from "util/getCurrencyIcon";
 import getTotalPrice from "util/getTotalPrice";
-import getCurrencyAmount from "util/getCurrencyAmount";
+import getProductAmount from "util/getProductAmount";
 
 import "./CartPage.scss";
 
@@ -58,7 +58,7 @@ class CartPage extends PureComponent {
                     <h3 className="cart__title">{product.name}</h3>
                     <span className="cart__price">
                       {getCurrencyIcon(currentCurrency)}
-                      {getCurrencyAmount(product, currentCurrency)}
+                      {getProductAmount(product, currentCurrency)}
                     </span>
 
                     {/* Product Attributes */}

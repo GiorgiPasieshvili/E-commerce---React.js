@@ -12,7 +12,7 @@ import { GET_PRODUCT } from "query/product.query";
 
 /* Import Custom Utils */
 import getCurrencyIcon from "util/getCurrencyIcon";
-import getCurrencyAmount from "util/getCurrencyAmount";
+import getProductAmount from "util/getProductAmount";
 
 import "./ProductPage.scss";
 
@@ -152,7 +152,7 @@ class ProductPage extends PureComponent {
                     <span className="product__label">price:</span>
                     <span className="product__price">
                       {getCurrencyIcon(currentCurrency)}
-                      {getCurrencyAmount(product, currentCurrency)}
+                      {getProductAmount(product, currentCurrency)}
                     </span>
                   </div>
 

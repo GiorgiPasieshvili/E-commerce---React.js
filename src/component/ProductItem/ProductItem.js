@@ -1,7 +1,11 @@
 import { PureComponent } from "react";
 import { Link } from "react-router-dom";
-import getCurrencyIcon from "util/getCurrencyIcon";
 
+/* Custom Utils */
+import getCurrencyIcon from "util/getCurrencyIcon";
+import getProductAmount from "util/getProductAmount";
+
+/* Graphql Stuff */
 import { connect } from "react-redux";
 import { addProduct } from "store/cartProductsSlice";
 
@@ -58,10 +62,7 @@ class ProductItem extends PureComponent {
             {getCurrencyIcon(currentCurrency)}
 
             {/* Find correct price by chosen currency */}
-            {
-              product.prices.find((price) => price.currency === currentCurrency)
-                .amount
-            }
+            {getProductAmount(product, currentCurrency)}
           </span>
 
           {/* Render button if product is in stock */}

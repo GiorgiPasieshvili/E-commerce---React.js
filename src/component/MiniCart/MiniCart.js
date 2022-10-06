@@ -13,7 +13,7 @@ import {
 
 /* Import Custom Utils */
 import getCurrencyIcon from "util/getCurrencyIcon";
-import getCurrencyAmount from "util/getCurrencyAmount";
+import getProductAmount from "util/getProductAmount";
 import getTotalPrice from "util/getTotalPrice";
 import getTotalProducts from "util/getTotalProducts";
 
@@ -89,7 +89,7 @@ class MiniCart extends PureComponent {
                     {/* Product Price */}
                     <span className="minicart__price">
                       {currencyIcon}
-                      {getCurrencyAmount(product, currentCurrency)}
+                      {getProductAmount(product, currentCurrency)}
                     </span>
 
                     {/* Render Product Attributes */}
