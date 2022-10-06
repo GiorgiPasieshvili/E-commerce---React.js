@@ -26,13 +26,7 @@ class ProductGrid extends PureComponent {
 
                 <ul className="product-grid__list">
                   {products.map((product, index) => {
-                    return (
-                      <ProductItem
-                        key={index}
-                        product={product}
-                        {...this.props}
-                      />
-                    );
+                    return <ProductItem key={index} product={product} />;
                   })}
                 </ul>
               </div>
