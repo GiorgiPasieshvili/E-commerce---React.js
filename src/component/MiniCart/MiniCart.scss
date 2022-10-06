@@ -1,144 +1,137 @@
-.minicart-wrapper {
+.minicart {
   font-size: 1rem;
   font-weight: 500;
   position: relative;
-}
 
-.cart-icon {
-  cursor: pointer;
-}
-
-.indicator {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: absolute;
-  left: 55%;
-  bottom: 45%;
-
-  width: 1.25rem;
-  height: 1.25rem;
-  background: #1d1f22;
-  border-radius: 50%;
-
-  font-family: Roboto;
-  font-size: 0.88rem;
-  font-weight: bold;
-  color: #fff;
-}
-
-.minicart {
-  position: absolute;
-  top: 3.13rem;
-  right: 0;
-
-  width: 20.31rem;
-  padding: 1rem;
-  background: #fff;
-
-  transition: 150ms;
-  visibility: hidden;
-  opacity: 0;
-
-  &.active {
-    visibility: visible;
-    opacity: 1;
+  &__trigger {
+    cursor: pointer;
   }
-}
 
-.minicart h4 {
-  margin-bottom: 0.88rem;
-  font-size: 1rem;
-  font-weight: bold;
-  text-transform: capitalize;
-}
+  &__counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.minicart .heading span {
-  font-weight: 500;
-  text-transform: lowercase;
-}
+    position: absolute;
+    left: 55%;
+    bottom: 45%;
 
-.minicart .list li {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 2.13rem;
-}
+    width: 1.25rem;
+    height: 1.25rem;
+    background: #1d1f22;
+    border-radius: 50%;
 
-.minicart .list h3,
-.minicart .list h2 {
-  font-size: 1rem;
-  font-weight: 300;
-  margin-bottom: 0.38rem;
-}
+    font-family: Roboto;
+    font-size: 0.88rem;
+    font-weight: bold;
+    color: #fff;
+  }
 
-.minicart .price {
-  display: inline-block;
-  font-weight: 500;
-  margin: 0.25rem 0 0.5rem;
-}
+  &__wrapper {
+    position: absolute;
+    top: 3.13rem;
+    right: 0;
 
-.minicart .options li {
-  width: auto;
-  height: 1.5rem;
+    width: 20.31rem;
+    padding: 1rem;
+    background: #fff;
 
-  padding: 0.32rem;
-  margin: 0 0.38rem 0 0;
-  border: 1px solid #1d1f22;
-}
+    transition: 150ms;
+    visibility: hidden;
+    opacity: 0;
 
-.minicart .heading,
-.minicart .options {
-  display: flex;
-  margin-bottom: 0.32rem;
-  font-size: 0.75rem;
-}
+    &.active {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 
-.minicart .options li {
-  padding: 0.2rem;
-}
+  &__heading {
+    margin-bottom: 0.88rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: capitalize;
 
-.minicart .right {
-  display: flex;
-}
+    span {
+      font-weight: 500;
+      text-transform: lowercase;
+    }
+  }
 
-.minicart .quantity {
-  margin-right: 0.5rem;
-}
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2.13rem;
+  }
 
-.minicart .quantity button {
-  width: 1.5rem;
-  height: 1.5rem;
-}
+  &__title,
+  &__subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 0.38rem;
+  }
 
-.minicart img {
-  width: 6.56rem;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-}
+  &__price {
+    display: inline-block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
 
-.minicart .total {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.88rem;
+  &__attribute:not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
 
-  font-size: 1rem;
-  font-weight: bold;
-  text-transform: capitalize;
-}
+  &__options li {
+    width: auto;
+    height: 1.5rem;
 
-.minicart .total:first-child {
-  font-family: Roboto;
-}
+    padding: 0.2rem;
+    margin: 0 0.38rem 0 0;
+    border: 1px solid #1d1f22;
+  }
 
-.minicart .buttons {
-  display: flex;
-  gap: 0.75rem;
-}
+  &__label {
+    display: flex;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+  }
 
-.minicart {
-  .button {
+  &__row {
+    display: flex;
+  }
+
+  &__quantity {
+    margin-right: 0.5rem;
+
+    button {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  &__image img {
+    width: 6.56rem;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  &__total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.88rem;
+
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  &__button {
     height: 2.69rem;
     font-size: 0.88rem;
   }

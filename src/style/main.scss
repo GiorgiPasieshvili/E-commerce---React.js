@@ -93,6 +93,10 @@ body {
       background: #292929;
       color: #fff;
     }
+
+    &.active-swatch {
+      transform: scale(1.1);
+    }
   }
 }
 
@@ -114,14 +118,6 @@ body {
   }
 }
 
-.swatch-active {
-  transform: scale(1.1);
-}
-
-.no-margin {
-  margin: 0 !important;
-}
-
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
@@ -137,13 +133,13 @@ body {
 .preloader:before {
   content: "";
   position: fixed;
-  top: calc(50% - 30px);
-  left: calc(50% - 30px);
-  border: 6px solid #fff;
+  top: calc(50% - 1.875rem);
+  left: calc(50% - 1.875rem);
+  border: 0.375rem solid #fff;
   border-color: #5ece7b transparent #5ece7b transparent;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 3.75rem;
+  height: 3.75rem;
   -webkit-animation: animate-preloader 1.5s linear infinite;
   animation: animate-preloader 1.5s linear infinite;
 }

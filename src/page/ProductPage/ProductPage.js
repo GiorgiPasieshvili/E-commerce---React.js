@@ -2,12 +2,13 @@ import { PureComponent } from "react";
 import { withRouter } from "react-router-dom";
 import Interweave from "interweave";
 
-/* Import graphql stuff */
+/* Import Graphql Stuff */
 import { Query } from "@apollo/client/react/components";
 import { GET_PRODUCT } from "query/product.query";
 
-/* Import custom utils */
+/* Import Custom Utils */
 import getCurrencyIcon from "util/getCurrencyIcon";
+import getCurrencyAmount from "util/getCurrencyAmount";
 
 import "./ProductPage.scss";
 
@@ -44,9 +45,18 @@ class ProductPage extends PureComponent {
     }));
   };
 
+  addToCart = (product) => {
+    this.props.onAdd(product, this.state.selectedOptions);
+    this.setState((state) => ({
+      ...state,
+      selectedOptions: [],
+    }));
+  };
+
   render() {
     const id = this.props.match.params.id || "";
-    const { currency, onAdd } = this.props;
+    const { currency } = this.props;
+    const { addToCart } = this;
 
     return (
       <Query query={GET_PRODUCT} variables={{ name: id }}>
@@ -56,10 +66,11 @@ class ProductPage extends PureComponent {
           const { product } = data;
 
           return (
-            <div className="details">
-              <div className="details__row | container">
-                <div className="images">
-                  <div className="others">
+            <div className="product">
+              <div className="product__row | container">
+                {/* Product Slider */}
+                <div className="product__slider">
+                  <div className="product__thumbs">
                     {product.gallery.map((image, index) => (
                       <img
                         onClick={() => this.handleImage(image)}
@@ -70,40 +81,41 @@ class ProductPage extends PureComponent {
                     ))}
                   </div>
                   <img
-                    className="default"
+                    className="product__image"
                     src={this.state.activeImage || product.gallery[0]}
                     alt={product.name}
                   />
                 </div>
 
-                <div className="info">
-                  <h3 className="subheading">{product.brand}</h3>
-                  <h2>{product.name}</h2>
+                {/* Product Details */}
+                <div className="product__details">
+                  <h3 className="product__subtitle">{product.brand}</h3>
+                  <h2 className="product__title">{product.name}</h2>
 
+                  {/* Map All Attributes */}
                   {product.attributes.map((attribute) => (
-                    <div className="attribute" key={attribute.id}>
-                      <span className="heading">{attribute.name}:</span>
-                      <ul className="options">
+                    <div className="product__attribute" key={attribute.id}>
+                      <span className="product__label">{attribute.name}:</span>
+                      <ul className="product__options options">
                         {attribute.items.map((item) => {
                           const selectedItem = this.state.selectedOptions.find(
                             (option) =>
                               option.id === attribute.id &&
                               option.value === item.value
                           );
+
                           return attribute.type === "swatch" ? (
                             <li
                               style={{ background: item.value }}
+                              className={selectedItem ? "active-swatch" : ""}
                               onClick={() =>
                                 this.handleOptions(attribute.id, item.value)
-                              }
-                              className={
-                                selectedItem ? "swatch-active" : undefined
                               }
                               key={item.id}
                             ></li>
                           ) : (
                             <li
-                              className={selectedItem ? "active" : undefined}
+                              className={selectedItem ? "active" : ""}
                               onClick={() =>
                                 this.handleOptions(attribute.id, item.value)
                               }
@@ -117,34 +129,31 @@ class ProductPage extends PureComponent {
                     </div>
                   ))}
 
-                  <span className="heading">price:</span>
-                  <span className="amount">
-                    {getCurrencyIcon(currency)}
-                    {
-                      product.prices.find(
-                        (price) => price.currency === currency
-                      ).amount
-                    }
-                  </span>
+                  {/* Product Price Attribute */}
+                  <div className="product__attribute">
+                    <span className="product__label">price:</span>
+                    <span className="product__price">
+                      {getCurrencyIcon(currency)}
+                      {getCurrencyAmount(product, currency)}
+                    </span>
+                  </div>
 
-                  <button
-                    className={`button button--${
-                      product.inStock ? "green" : "red"
-                    }`}
-                    onClick={() => {
-                      if (product.inStock) {
-                        onAdd(product, this.state.selectedOptions);
-                        this.setState((state) => ({
-                          ...state,
-                          selectedOptions: [],
-                        }));
-                      }
-                    }}
-                  >
-                    {product.inStock ? "add to cart" : "out of stock"}
-                  </button>
+                  {/* Product Main Button */}
+                  {product.inStock ? (
+                    <button
+                      className="product__button button button--green"
+                      onClick={() => addToCart(product)}
+                    >
+                      ADD TO CART
+                    </button>
+                  ) : (
+                    <button className="product__button button button--red">
+                      OUT OF STOCK
+                    </button>
+                  )}
+
                   <Interweave
-                    className="description"
+                    className="product__description"
                     content={product.description}
                   />
                 </div>

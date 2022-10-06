@@ -6,6 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 /* Import custom utils */
 import getCurrencyIcon from "util/getCurrencyIcon";
 import getTotalPrice from "util/getTotalPrice";
+import getCurrencyAmount from "util/getCurrencyAmount";
 
 import "./CartPage.scss";
 
@@ -19,33 +20,33 @@ class CartPage extends PureComponent {
       <div className="cart">
         <div className="container">
           <h2 className="cart__heading">cart</h2>
+
+          {/* List of Products */}
           <ul className="cart__list">
             {cartItems
               .slice(0)
               .reverse()
               .map((product) => (
                 <li key={product.uniqueId} className="cart__item">
-                  <div>
-                    <h4>{product.brand}</h4>
-                    <h3>{product.name}</h3>
-                    <span className="price">
+                  <div className="cart__details">
+                    <h4 className="cart__subtitle">{product.brand}</h4>
+                    <h3 className="cart__title">{product.name}</h3>
+                    <span className="cart__price">
                       {getCurrencyIcon(currency)}
-                      {
-                        product.prices.find(
-                          (price) => price.currency === currency
-                        ).amount
-                      }
+                      {getCurrencyAmount(product, currency)}
                     </span>
 
-                    <div className="attributes">
+                    {/* Product Attributes */}
+                    <div className="cart__attributes">
                       {product.attributes.map((attribute) => (
-                        <ul className="options" key={attribute.id}>
+                        <ul className="cart__options options" key={attribute.id}>
                           {attribute.items.map((item) => {
                             const selectedItem = product.selectedOptions.find(
                               (option) =>
                                 option.id === attribute.id &&
                                 option.value === item.value
                             );
+
                             return attribute.type === "swatch" ? (
                               <li
                                 style={{ background: item.value }}
@@ -53,7 +54,7 @@ class CartPage extends PureComponent {
                                   onChange(product, attribute.id, item.value)
                                 }
                                 className={
-                                  selectedItem ? "swatch-active" : undefined
+                                  selectedItem ? "active-swatch" : null
                                 }
                                 key={item.id}
                               ></li>
@@ -62,7 +63,7 @@ class CartPage extends PureComponent {
                                 onClick={() =>
                                   onChange(product, attribute.id, item.value)
                                 }
-                                className={selectedItem ? "active" : undefined}
+                                className={selectedItem ? "active" : null}
                                 key={item.id}
                               >
                                 {item.value}
@@ -74,8 +75,8 @@ class CartPage extends PureComponent {
                     </div>
                   </div>
 
-                  <div className="right">
-                    <div className="quantity">
+                  <div className="cart__row">
+                    <div className="cart__quantity quantity">
                       <button onClick={() => onAdd(product)}>+</button>
                       <span>{product.qty}</span>
                       <button onClick={() => onRemove(product)}>-</button>
@@ -88,7 +89,7 @@ class CartPage extends PureComponent {
                       width={140}
                     >
                       {product.gallery.map((image, index) => (
-                        <div key={index}>
+                        <div className="cart__image" key={index}>
                           <img src={image} alt={product.name} />
                         </div>
                       ))}
@@ -98,16 +99,16 @@ class CartPage extends PureComponent {
               ))}
           </ul>
 
-          <div className="checkout">
-            <div>
-              <span>Total:</span>
-              <span>
-                {getCurrencyIcon(currency)}
-                {totalPrice}
-              </span>
+          {/* Cart Checkout Area */}
+          <div className="cart__checkout">
+            <div className="cart__total-price">
+              Total: {getCurrencyIcon(currency)}
+              {totalPrice}
             </div>
 
-            <button className="button button--green">check out</button>
+            <button className="cart__button button button--green">
+              check out
+            </button>
           </div>
         </div>
       </div>
