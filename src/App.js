@@ -56,12 +56,14 @@ class App extends Component {
             }}
           ></div>
 
-          <Switch>
-            <Route exact path="/" children={<HomePage />} />
-            <Route exact path="/category/:name" children={<CategoryPage />} />
-            <Route exact path="/product/:id" children={<ProductPage />} />
-            <Route exact path="/cart" children={<CartPage />} />
-          </Switch>
+          <main className="main">
+            <Switch>
+              <Route exact path="/" children={<HomePage />} />
+              <Route exact path="/category/:name" children={<CategoryPage />} />
+              <Route exact path="/product/:id" children={<ProductPage />} />
+              <Route exact path="/cart" children={<CartPage />} />
+            </Switch>
+          </main>
         </BrowserRouter>
       </div>
     );
