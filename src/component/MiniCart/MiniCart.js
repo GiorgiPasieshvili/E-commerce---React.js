@@ -1,6 +1,10 @@
 import { PureComponent } from "react";
 import { Link } from "react-router-dom";
 
+import { connect } from "react-redux";
+import { miniCartToggle, miniCartDisable } from "store/miniCartSlice";
+import { currenciesDisable } from "store/currenciesSlice";
+
 /* Import custom utils */
 import getCurrencyIcon from "util/getCurrencyIcon";
 import getCurrencyAmount from "util/getCurrencyAmount";
@@ -9,14 +13,21 @@ import getTotalProducts from "util/getTotalProducts";
 
 import "./MiniCart.scss";
 
+const mapStateToProps = (state) => ({
+  isMiniCartActive: state.miniCart.isActive,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  miniCartToggle: () => dispatch(miniCartToggle()),
+  miniCartDisable: () => dispatch(miniCartDisable()),
+  currenciesDisable: () => dispatch(currenciesDisable()),
+});
+
 class MiniCart extends PureComponent {
   render() {
     const {
       cartItems,
       currency,
-      minicartActive,
-      setMinicartActive,
-      setCurrencyActive,
       onAdd,
       onRemove,
       onChange,
@@ -26,13 +37,20 @@ class MiniCart extends PureComponent {
     const totalPrice = getTotalPrice(cartItems, currency);
     const totalItems = getTotalProducts(cartItems);
 
+    const {
+      isMiniCartActive,
+      miniCartToggle,
+      miniCartDisable,
+      currenciesDisable,
+    } = this.props;
+
     return (
       <div className="minicart">
         <div
           className="minicart__trigger"
           onClick={() => {
-            setMinicartActive(!minicartActive);
-            setCurrencyActive(false);
+            miniCartToggle();
+            currenciesDisable();
           }}
         >
           {totalItems > 0 && (
@@ -43,7 +61,7 @@ class MiniCart extends PureComponent {
         </div>
 
         <div
-          className={"minicart__wrapper" + (minicartActive ? " active" : "")}
+          className={"minicart__wrapper" + (isMiniCartActive ? " active" : "")}
         >
           <h4 className="minicart__heading">
             My Bag, <span>{cartItems.length} items</span>
@@ -139,7 +157,7 @@ class MiniCart extends PureComponent {
             <Link
               to="/cart"
               className="minicart__button button button--light"
-              onClick={() => setMinicartActive(false)}
+              onClick={() => miniCartDisable()}
             >
               view bag
             </Link>
@@ -154,4 +172,4 @@ class MiniCart extends PureComponent {
   }
 }
 
-export default MiniCart;
+export default connect(mapStateToProps, mapDispatchToProps)(MiniCart);

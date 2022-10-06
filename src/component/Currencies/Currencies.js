@@ -1,18 +1,36 @@
 import { PureComponent } from "react";
+import getCurrencyIcon from "util/getCurrencyIcon";
+
+/* Graphql Stuff */
 import { Query } from "@apollo/client/react/components";
 import { GET_CURRENCIES } from "query/currencies.query";
-import getCurrencyIcon from "util/getCurrencyIcon";
+
+/* Redux Stuff */
+import { connect } from "react-redux";
+import { miniCartDisable } from "store/miniCartSlice";
+import { currenciesToggle, currenciesDisable } from "store/currenciesSlice";
 
 import "./Currencies.scss";
 
+const mapStateToProps = (state) => ({
+  isCurrenciesActive: state.currencies.isActive,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  currenciesToggle: () => dispatch(currenciesToggle()),
+  currenciesDisable: () => dispatch(currenciesDisable()),
+  miniCartDisable: () => dispatch(miniCartDisable()),
+});
+
 class Currencies extends PureComponent {
   render() {
+    const { currency, setCurrency } = this.props;
+
     const {
-      currency,
-      setCurrency,
-      currencyActive,
-      setCurrencyActive,
-      setMinicartActive,
+      isCurrenciesActive,
+      currenciesToggle,
+      currenciesDisable,
+      miniCartDisable,
     } = this.props;
 
     return (
@@ -25,20 +43,20 @@ class Currencies extends PureComponent {
             <div className="currencies">
               <span
                 onClick={() => {
-                  setMinicartActive(false);
-                  setCurrencyActive(!currencyActive);
+                  miniCartDisable();
+                  currenciesToggle();
                 }}
               >
                 {getCurrencyIcon(currency)}
               </span>
 
-              <ul className={currencyActive ? "active" : null}>
+              <ul className={isCurrenciesActive ? "active" : null}>
                 {data.currencies.map((currency, index) => (
                   <li
                     key={index}
                     onClick={() => {
                       setCurrency(currency);
-                      setCurrencyActive(false);
+                      currenciesDisable();
                     }}
                   >
                     {getCurrencyIcon(currency)}
@@ -54,4 +72,4 @@ class Currencies extends PureComponent {
   }
 }
 
-export default Currencies;
+export default connect(mapStateToProps, mapDispatchToProps)(Currencies);

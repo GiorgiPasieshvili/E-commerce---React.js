@@ -14,10 +14,6 @@ class Header extends PureComponent {
       setCategory,
       currency,
       setCurrency,
-      currencyActive,
-      setCurrencyActive,
-      minicartActive,
-      setMinicartActive,
       cartItems,
       setCartItems,
       onAdd,
@@ -35,16 +31,10 @@ class Header extends PureComponent {
             <Currencies
               currency={currency}
               setCurrency={setCurrency}
-              currencyActive={currencyActive}
-              setCurrencyActive={setCurrencyActive}
-              setMinicartActive={setMinicartActive}
             />
 
             <MiniCart
               currency={currency}
-              minicartActive={minicartActive}
-              setMinicartActive={setMinicartActive}
-              setCurrencyActive={setCurrencyActive}
               cartItems={cartItems}
               setCartItems={setCartItems}
               onAdd={onAdd}

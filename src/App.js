@@ -1,16 +1,31 @@
-/* Import utilities */
+/* Import Utilities */
 import { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-/* Import global styles */
+/* Redux Stuff */
+import { connect } from "react-redux";
+import { miniCartDisable } from "store/miniCartSlice";
+import { currenciesDisable } from "store/currenciesSlice";
+
+/* Import Global Styles */
 import "style/main.scss";
 
-/* Import components and pages */
+/* Import Components & Pages */
 import Header from "component/Header";
 import HomePage from "page/HomePage";
 import CategoryPage from "page/CategoryPage";
 import ProductPage from "page/ProductPage";
 import CartPage from "page/CartPage";
+
+const mapStateToProps = (state) => ({
+  isMiniCartActive: state.miniCart.isActive,
+  isCurrenciesActive: state.currencies.isActive,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  miniCartDisable: () => dispatch(miniCartDisable()),
+  currenciesDisable: () => dispatch(currenciesDisable()),
+});
 
 class App extends Component {
   constructor(props) {
@@ -18,9 +33,7 @@ class App extends Component {
     this.state = {
       category: "",
       currency: "USD",
-      cartItems: [],
-      currencyActive: false,
-      minicartActive: false,
+      cartItems: []
     };
   }
 
@@ -42,20 +55,6 @@ class App extends Component {
     this.setState((state) => ({
       ...state,
       cartItems: products,
-    }));
-  };
-
-  setCurrencyActive = (boolean) => {
-    this.setState((state) => ({
-      ...state,
-      currencyActive: boolean,
-    }));
-  };
-
-  setMinicartActive = (boolean) => {
-    this.setState((state) => ({
-      ...state,
-      minicartActive: boolean,
     }));
   };
 
@@ -131,8 +130,12 @@ class App extends Component {
   };
 
   render() {
-    const { minicartActive, currencyActive } = this.state;
-    const { setMinicartActive, setCurrencyActive } = this;
+    const {
+      isMiniCartActive,
+      isCurrenciesActive,
+      miniCartDisable,
+      currenciesDisable,
+    } = this.props;
 
     return (
       <div className="app">
@@ -142,10 +145,6 @@ class App extends Component {
             setCategory={this.setCategory}
             currency={this.state.currency}
             setCurrency={this.setCurrency}
-            currencyActive={this.state.currencyActive}
-            setCurrencyActive={this.setCurrencyActive}
-            minicartActive={this.state.minicartActive}
-            setMinicartActive={this.setMinicartActive}
             cartItems={this.state.cartItems}
             setCartItem={this.setCartItems}
             onAdd={this.onAdd}
@@ -156,15 +155,15 @@ class App extends Component {
           <div
             className={
               "overlay" +
-              (minicartActive
+              (isMiniCartActive
                 ? " active"
-                : currencyActive
+                : isCurrenciesActive
                 ? " overlay--hidden active"
                 : "")
             }
             onClick={() => {
-              setMinicartActive(false);
-              setCurrencyActive(false);
+              miniCartDisable();
+              currenciesDisable();
             }}
           ></div>
 
@@ -221,4 +220,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
