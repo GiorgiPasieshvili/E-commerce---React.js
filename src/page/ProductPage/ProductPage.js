@@ -28,32 +28,36 @@ class ProductPage extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      activeImage: "",
-      selectedOptions: [],
+      activeThumb: "",
+      options: [],
     };
   }
 
-  handleOptions = (id, value) => {
-    const exist = this.state.selectedOptions.find((option) => option.id === id);
-    if (exist) {
+  handleOptions = (attributeId, value) => {
+    const { options } = this.state;
+    const existedOption = options.find(
+      (option) => option.attributeId === attributeId
+    );
+
+    if (existedOption) {
       this.setState((state) => ({
         ...state,
-        selectedOptions: this.state.selectedOptions.map((x) =>
-          x.id === id ? { ...exist, value } : x
+        options: options.map((x) =>
+          x.attributeId === attributeId ? { ...existedOption, value } : x
         ),
       }));
     } else {
       this.setState((state) => ({
         ...state,
-        selectedOptions: [...this.state.selectedOptions, { id, value }],
+        options: [...options, { attributeId, value }],
       }));
     }
   };
 
-  handleImage = (image) => {
+  handleThumb = (image) => {
     this.setState((state) => ({
       ...state,
-      activeImage: image,
+      activeThumb: image,
     }));
   };
 
@@ -62,18 +66,19 @@ class ProductPage extends PureComponent {
 
     const payload = {
       product: product,
-      options: this.state.selectedOptions,
+      options: this.state.options,
     };
 
     addProduct(payload);
     this.setState((state) => ({
       ...state,
-      selectedOptions: [],
+      options: [],
     }));
   };
 
   render() {
     const id = this.props.match.params.id || "";
+    const { activeThumb, options } = this.state;
     const { currentCurrency } = this.props;
 
     return (
@@ -91,7 +96,7 @@ class ProductPage extends PureComponent {
                   <div className="product__thumbs">
                     {product.gallery.map((image, index) => (
                       <img
-                        onClick={() => this.handleImage(image)}
+                        onClick={() => this.handleThumb(image)}
                         src={image}
                         alt={product.name}
                         key={index}
@@ -100,7 +105,7 @@ class ProductPage extends PureComponent {
                   </div>
                   <img
                     className="product__image"
-                    src={this.state.activeImage || product.gallery[0]}
+                    src={activeThumb || product.gallery[0]}
                     alt={product.name}
                   />
                 </div>
@@ -116,16 +121,16 @@ class ProductPage extends PureComponent {
                       <span className="product__label">{attribute.name}:</span>
                       <ul className="product__options options">
                         {attribute.items.map((item) => {
-                          const selectedItem = this.state.selectedOptions.find(
+                          const selectedOption = options.find(
                             (option) =>
-                              option.id === attribute.id &&
+                              option.attributeId === attribute.id &&
                               option.value === item.value
                           );
 
                           return attribute.type === "swatch" ? (
                             <li
                               style={{ background: item.value }}
-                              className={selectedItem ? "active-swatch" : ""}
+                              className={selectedOption ? "active-swatch" : ""}
                               onClick={() =>
                                 this.handleOptions(attribute.id, item.value)
                               }
@@ -133,7 +138,7 @@ class ProductPage extends PureComponent {
                             ></li>
                           ) : (
                             <li
-                              className={selectedItem ? "active" : ""}
+                              className={selectedOption ? "active" : ""}
                               onClick={() =>
                                 this.handleOptions(attribute.id, item.value)
                               }

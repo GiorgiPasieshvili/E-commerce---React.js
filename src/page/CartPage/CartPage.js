@@ -69,9 +69,9 @@ class CartPage extends PureComponent {
                           key={attribute.id}
                         >
                           {attribute.items.map((item) => {
-                            const selectedItem = product.options.find(
+                            const selectedOption = product.options.find(
                               (option) =>
-                                option.id === attribute.id &&
+                                option.attributeId === attribute.id &&
                                 option.value === item.value
                             );
 
@@ -81,12 +81,12 @@ class CartPage extends PureComponent {
                                 onClick={() =>
                                   changeProduct({
                                     product: product,
-                                    id: attribute.id,
+                                    attributeId: attribute.id,
                                     value: item.value,
                                   })
                                 }
                                 className={
-                                  selectedItem ? "active-swatch" : null
+                                  selectedOption ? "active-swatch" : null
                                 }
                                 key={item.id}
                               ></li>
@@ -95,11 +95,11 @@ class CartPage extends PureComponent {
                                 onClick={() =>
                                   changeProduct({
                                     product: product,
-                                    id: attribute.id,
+                                    attributeId: attribute.id,
                                     value: item.value,
                                   })
                                 }
-                                className={selectedItem ? "active" : null}
+                                className={selectedOption ? "active" : null}
                                 key={item.id}
                               >
                                 {item.value}

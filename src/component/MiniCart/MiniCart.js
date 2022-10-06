@@ -100,9 +100,9 @@ class MiniCart extends PureComponent {
                         </span>
                         <ul className="minicart__options options">
                           {attribute.items.map((item) => {
-                            const selectedItem = product.options.find(
+                            const selectedOption = product.options.find(
                               (option) =>
-                                option.id === attribute.id &&
+                                option.attributeId === attribute.id &&
                                 option.value === item.value
                             );
                             return attribute.type === "swatch" ? (
@@ -113,23 +113,23 @@ class MiniCart extends PureComponent {
                                 }}
                                 onClick={() =>
                                   changeProduct({
-                                    product,
-                                    id: attribute.id,
+                                    product: product,
+                                    attributeId: attribute.id,
                                     value: item.value,
                                   })
                                 }
                                 className={
-                                  selectedItem ? "active-swatch" : null
+                                  selectedOption ? "active-swatch" : null
                                 }
                                 key={item.id}
                               ></li>
                             ) : (
                               <li
-                                className={selectedItem ? "active" : null}
+                                className={selectedOption ? "active" : null}
                                 onClick={() =>
                                   changeProduct({
-                                    product,
-                                    id: attribute.id,
+                                    product: product,
+                                    attributeId: attribute.id,
                                     value: item.value,
                                   })
                                 }

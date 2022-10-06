@@ -43,30 +43,34 @@ export const cartProductsSlice = createSlice({
     removeProduct: (state, action) => {
       let { product } = action.payload;
 
-      const exist = state.cartProducts.find(
+      const existedProduct = state.cartProducts.find(
         (x) => x.uniqueId === product.uniqueId
       );
-      if (exist.qty === 1) {
+      if (existedProduct.qty === 1) {
         state.cartProducts = state.cartProducts.filter(
           (x) => x.uniqueId !== product.uniqueId
         );
       } else {
         state.cartProducts = state.cartProducts.map((x) =>
-          x.uniqueId === product.uniqueId ? { ...exist, qty: exist.qty - 1 } : x
+          x.uniqueId === product.uniqueId
+            ? { ...existedProduct, qty: existedProduct.qty - 1 }
+            : x
         );
       }
     },
 
     changeProduct: (state, action) => {
-      let { product, id, value } = action.payload;
+      let { product, attributeId, value } = action.payload;
 
       state.cartProducts = state.cartProducts.map((x) =>
         x.uniqueId === product.uniqueId
           ? {
               ...product,
               options: [
-                ...product.options.filter((option) => option.id !== id),
-                { id, value },
+                ...product.options.filter(
+                  (option) => option.attributeId !== attributeId
+                ),
+                { attributeId, value },
               ],
             }
           : x
