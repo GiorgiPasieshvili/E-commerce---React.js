@@ -1,13 +1,20 @@
 import { PureComponent } from "react";
 import { Link } from "react-router-dom";
 
+import { connect } from "react-redux";
+import { clearCategory } from "store/categorySlice";
+
+const mapDispatchToProps = (dispatch) => ({
+  clearCategory: () => dispatch(clearCategory()),
+});
+
 class Logo extends PureComponent {
   render() {
-    const { setCategory } = this.props;
+    const { clearCategory } = this.props;
 
     return (
       <div>
-        <Link to="/" onClick={() => setCategory("")}>
+        <Link to="/" onClick={() => clearCategory()}>
           <img src="/images/logo.png" alt="mincommerce" />
         </Link>
       </div>
@@ -15,4 +22,4 @@ class Logo extends PureComponent {
   }
 }
 
-export default Logo;
+export default connect(null, mapDispatchToProps)(Logo);

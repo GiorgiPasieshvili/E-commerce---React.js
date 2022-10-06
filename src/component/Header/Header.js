@@ -9,21 +9,13 @@ import "./Header.scss";
 
 class Header extends PureComponent {
   render() {
-    const {
-      category,
-      setCategory,
-      cartItems,
-      setCartItems,
-      onAdd,
-      onRemove,
-      onChange,
-    } = this.props;
+    const { cartItems, setCartItems, onAdd, onRemove, onChange } = this.props;
 
     return (
       <div className="header">
         <div className="header__row | container">
-          <Menu category={category} setCategory={setCategory} />
-          <Logo setCategory={setCategory} />
+          <Menu />
+          <Logo />
 
           <div className="header__features">
             <Currencies />

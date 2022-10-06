@@ -31,17 +31,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: "",
       cartItems: [],
     };
   }
-
-  setCategory = (category) => {
-    this.setState((state) => ({
-      ...state,
-      category: category,
-    }));
-  };
 
   setCartItems = (products) => {
     this.setState((state) => ({
@@ -133,8 +125,6 @@ class App extends Component {
       <div className="app">
         <BrowserRouter>
           <Header
-            category={this.state.category}
-            setCategory={this.setCategory}
             cartItems={this.state.cartItems}
             setCartItem={this.setCartItems}
             onAdd={this.onAdd}

@@ -1,13 +1,27 @@
 import { PureComponent } from "react";
 import { Link } from "react-router-dom";
+
+/* Graphql Studd */
 import { Query } from "@apollo/client/react/components";
 import { GET_CATEGORIES } from "query/menu.query";
 
+/* Redux Stuff */
+import { connect } from "react-redux";
+import { changeCategory } from "store/categorySlice";
+
 import "./Menu.scss";
+
+const mapStateToProps = (state) => ({
+  currentCategory: state.category.current,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeCategory: (payload) => dispatch(changeCategory(payload)),
+});
 
 class Menu extends PureComponent {
   render() {
-    const { category, setCategory } = this.props;
+    const { currentCategory, changeCategory } = this.props;
 
     return (
       <Query query={GET_CATEGORIES}>
@@ -20,10 +34,10 @@ class Menu extends PureComponent {
               {data.categories.map(({ name }, index) => (
                 <li
                   key={index}
-                  className={name === category ? "active" : null}
-                  onClick={() => setCategory(name)}
+                  className={name === currentCategory ? "active" : null}
+                  onClick={() => changeCategory(name)}
                 >
-                  <Link to={'/category/' + name}>{name}</Link>
+                  <Link to={"/category/" + name}>{name}</Link>
                 </li>
               ))}
             </ul>
@@ -34,4 +48,4 @@ class Menu extends PureComponent {
   }
 }
 
-export default Menu;
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
