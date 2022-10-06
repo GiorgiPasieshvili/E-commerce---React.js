@@ -1,7 +1,15 @@
+@use 'style/mixins' as mix;
+
 .menu {
   display: flex;
   height: 100%;
   text-transform: uppercase;
+
+  font-size: 0.9rem;
+
+  @include mix.desktop {
+    font-size: 1rem;
+  }
 
   li {
     border-bottom: 1px solid transparent;

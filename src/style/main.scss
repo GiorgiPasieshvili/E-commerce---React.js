@@ -15,7 +15,7 @@ body {
 }
 
 .container {
-  max-width: 77.5rem;
+  width: min(77.5rem, 100% - 2rem);
   margin: 0 auto;
 }
 

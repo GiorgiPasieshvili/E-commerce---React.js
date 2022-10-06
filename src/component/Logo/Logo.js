@@ -13,7 +13,7 @@ class Logo extends PureComponent {
     const { clearCategory } = this.props;
 
     return (
-      <div>
+      <div className="logo">
         <Link to="/" onClick={() => clearCategory()}>
           <img src="/images/logo.png" alt="mincommerce" />
         </Link>

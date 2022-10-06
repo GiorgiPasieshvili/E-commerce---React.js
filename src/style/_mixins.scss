@@ -1,13 +1,20 @@
 // from 1024px and up
 @mixin desktop() {
-  @media (min-width: 64em) {
+  @media (min-width: 72em) {
     @content;
   }
 }
 
-// until 1023px
+// from 768px and up
+@mixin tablet() {
+  @media (min-width: 48em) {
+    @content;
+  }
+}
+
+// until 767px
 @mixin mobile() {
-  @media (max-width: 63.938em) {
+  @media (max-width: 47.9375em) {
     @content;
   }
 }

@@ -1,10 +1,17 @@
+@use "style/mixins" as mix;
+
 .header {
   height: 5rem;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
   background: #fff;
+  padding-right: 0.5rem;
 
   position: relative;
   z-index: 2;
+
+  @include mix.desktop {
+    margin-bottom: 5rem;
+  }
 
   &__row {
     display: flex;
