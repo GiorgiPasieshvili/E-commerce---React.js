@@ -79,10 +79,3 @@ export const { addProduct, removeProduct, changeProduct } =
   cartProductsSlice.actions;
 
 export default cartProductsSlice.reducer;
-
-// basicMethod: (state) => {
-//   state.cartProducts = false;
-// },
-// payloadMethod: (state, payload) => {
-//   state.cartProducts = false;
-// },
