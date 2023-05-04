@@ -1,3 +1,3 @@
-# Mini eCommerce platform based on React.js
+## Frontend for mini eCommerce platform
 
 https://mincommerce.vercel.app/
